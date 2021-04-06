@@ -87,11 +87,11 @@ docker rmi wework
 
 - 无法运行?
 
-请注意运行环境,必需在linux下,并且将 `libWeWorkFinanceSdk_Java.so` 拷贝到 `/usr/lib/` 下
+    请注意运行环境,必需在linux下,并且将 `libWeWorkFinanceSdk_Java.so` 拷贝到 `/usr/lib/` 下
 
 - 可以运行无法拉取?
 
-是否将服务器ip添加到企业微信后台的白名单中,密钥等是否配置正确
+    是否将服务器ip添加到企业微信后台的白名单中,密钥等是否配置正确
 
 
 ###  参与贡献
