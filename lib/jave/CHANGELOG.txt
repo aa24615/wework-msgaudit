@@ -1,0 +1,6 @@
+Release 1.0.2 - 2009-04-15
++ Bugfix in handling Data streams
+
+Release 1.0.1 - 2008-05-01
++ pthreadGC2.dll bundled in the distribution
++ DefaultFFMPEGLocator updated
