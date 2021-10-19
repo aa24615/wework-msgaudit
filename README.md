@@ -1,7 +1,8 @@
 # wework-msgaudit
 
 企业微信-会话内容存档     
-实时拉取企业微信聊天记录java版SDK
+实时拉取企业微信聊天记录java版SDK  
+[官方文档](https://open.work.weixin.qq.com/api/doc/90000/90135/91774)
 
 ### 功能
 
@@ -99,10 +100,11 @@ java -jar target/wework-msgaudit-1.0.jar
 
 ### 进程守护
 
-使用 supervisord 进行守护 请见 supervisord 文件夹      
+使用 supervisord 进行守护 请见 supervisord 文件夹  
+详细配置请参考 [supervisord官方文档](http://supervisord.org/)   
 work.ini 为java进程守护 运行目录与日志等请自行修改    
 resert.ini 为重启进程守护 配合 /bin/restart.sh 进行使用      
-/bin/restart.sh 是一个redis队列,当有企业变动时,推送队列到redis来重启进程      
+/bin/restart.sh 是一个redis队列,当有企业变动时,推送队列到redis来重启进程  
 
 ### 使用docker运行
 
