@@ -51,7 +51,7 @@ cp ./lib/libWeWorkFinanceSdk_Java.so /usr/lib/libWeWorkFinanceSdk_Java.so
 |corpname|企业名称|
 |prikey|私钥|
 |limits|一页拉取条数|
-|timeout|超时|
+|timeout|拉取超时(秒)|
 |status|状态|
 |update|是否更新|
 
