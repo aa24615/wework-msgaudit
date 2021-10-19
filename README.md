@@ -36,6 +36,8 @@ src/main/java/com/php127/wework/DataSource.java
 cp ./lib/libWeWorkFinanceSdk_Java.so /usr/lib/libWeWorkFinanceSdk_Java.so
 ```
 
+## 数据
+
 ### 数据表
 
 - 运行后由程序自动创建数据表
@@ -79,6 +81,10 @@ cp ./lib/libWeWorkFinanceSdk_Java.so /usr/lib/libWeWorkFinanceSdk_Java.so
 |roomid |群聊消息的群id(如果是单聊则为空)|
 |created |创建时间|
 
+#### 媒体文件
+
+聊天中产生的图片,语音,视频,doc文档等文件 默认下载到 `msgfile/coprid_name` 目录下   
+您可以在nginx上添加一个静态站点指向 `msgfile` 目录 即可访问资源
 
 ### 编译
 
