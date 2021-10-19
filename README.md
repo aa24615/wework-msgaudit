@@ -9,6 +9,12 @@
 - [x] 音频转码
 - [x] 自动分表
 
+### 要求
+
+1. jdk >= 8.0
+2. mvn
+3. mysql >= 5.6
+
 ### 安装
 
 ```shell script
@@ -32,8 +38,46 @@ cp ./lib/libWeWorkFinanceSdk_Java.so /usr/lib/libWeWorkFinanceSdk_Java.so
 ### 数据表
 
 - 运行后由程序自动创建数据表
-- corplist 企业表 运行第一次后,再手工添加一个企业配置,注意:添加服务器白名单   
-- message_xxxx 聊天记录分表 每个企业一个表
+- corplist 企业表 运行第一次后,再手工添加一个企业配置 (注意:添加服务器白名单)  
+- message_xxxx 聊天记录分表 一个企业一个表
+
+#### 企业表 ( corplist )
+
+|字段|说明|
+|---|---|
+|id|主健(自增id)|
+|corpid|企业id|
+|secret|会话存档secret|
+|corpname|企业名称|
+|prikey|私钥|
+|limits|一页拉取条数|
+|timeout|超时|
+|status|状态|
+|update|是否更新|
+
+
+#### 聊天记录表 ( message_wwbxxxxxx7aed6f )
+
+|字段|说明|
+|---|---|
+|id|主健(自增id)|
+|msgid | 消息ID|
+|publickey_ver | 密钥版本|
+|seq | 消息序号,最大值为2^64 -1|
+|action |消息动作,目前有send(发送消息)/recall(撤回消息)/switch(切换企业日志)三种类型|
+|msgfrom |消息发送方id(同一企业内容为userid,非相同企业和机器人消息均为external_userid)|
+|tolist |消息接收方ID列表(多个接收ID以逗号分隔)|
+|msgtype |消息类型|
+|msgtime |消息发送时间戳(utc时间,ms单位)|
+|text |文本消息|
+|sdkfield |附件ID|
+|msgdata |原始消息数据 json格式|
+|status |1.未加载媒体/2.正在加载媒体/3.媒体加载完成/4.媒体加载失败|
+|media_code |媒体错误码|
+|media_path |媒体文件路径|
+|roomid |群聊消息的群id(如果是单聊则为空)|
+|created |创建时间|
+
 
 ### 编译
 
@@ -59,7 +103,6 @@ java -jar target/wework-msgaudit-1.0.jar
 work.ini 为java进程守护 运行目录与日志等请自行修改    
 resert.ini 为重启进程守护 配合 /bin/restart.sh 进行使用      
 /bin/restart.sh 是一个redis队列,当有企业变动时,推送队列到redis来重启进程      
-
 
 ### 使用docker运行
 
@@ -95,6 +138,8 @@ docker rmi wework
 
 
 ###  参与贡献
+
+作者非java专业开发,有设计不合理的地方,欢迎大佬们指点
 
 1. fork 当前库到你的名下
 2. 在你的本地修改完成审阅过后提交到你的仓库
