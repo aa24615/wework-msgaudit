@@ -135,6 +135,13 @@ docker rmi wework
 
 ```
 ###  常见问题
+- 注意,注意,注意,重要的事说三遍?
+
+```text
+  请不要在mac下运行,libWeWorkFinanceSdk_Java.so是linux环境的   
+  请不要在mac下运行,libWeWorkFinanceSdk_Java.so是linux环境的   
+  请不要在mac下运行,libWeWorkFinanceSdk_Java.so是linux环境的   
+```
 
 - 无法运行?
 
