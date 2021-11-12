@@ -11,14 +11,17 @@ package com.php127.wework;
 
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-public class DataSource {
+public class DB {
 
-    public static DriverManagerDataSource init(){
+    public static DriverManagerDataSource getInstance(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://172.18.0.2:3306/message?useSSL=false&characterEncoding=utf-8&autoReconnect=true");
-        dataSource.setUsername("root");
-        dataSource.setPassword("root");
+        //地址:端口
+        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/test?useSSL=false&characterEncoding=utf-8&autoReconnect=true");
+        //用户名
+        dataSource.setUsername("test123");
+        //密码
+        dataSource.setPassword("test123");
         return dataSource;
     }
 }

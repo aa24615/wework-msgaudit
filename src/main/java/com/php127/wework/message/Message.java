@@ -7,11 +7,12 @@
  * with this source code in the file LICENSE.
  */
 
-package com.php127.wework;
+package com.php127.wework.message;
 
-//import com.tencent.wework.Base64Coded;
+import com.php127.wework.DB;
 import com.tencent.wework.Finance;
-import com.tencent.wework.RSAEncrypt;
+import com.php127.wework.utils.RSAEncrypt;
+import com.php127.wework.utils.Audio;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -71,7 +72,7 @@ public class Message {
             System.out.println("大于0");
             return this.seqs;
         }
-        JdbcTemplate  jdbcTemplate = new JdbcTemplate(DataSource.init());
+        JdbcTemplate  jdbcTemplate = new JdbcTemplate(DB.getInstance());
         String sql = String.format("SELECT count(*) FROM %s",this.tableName);
 
         int count = jdbcTemplate.queryForObject(sql,Integer.class);
@@ -293,7 +294,7 @@ public class Message {
         String created = ft.format(Now);
 
         //入库啦
-        JdbcTemplate  jdbcTemplate = new JdbcTemplate(DataSource.init());
+        JdbcTemplate  jdbcTemplate = new JdbcTemplate(DB.getInstance());
         String sql;
         sql = String.format("SELECT count(*) FROM %s WHERE msgid='%s'",this.tableName,msgid);
 
@@ -346,7 +347,7 @@ public class Message {
             }
             if (Finance.IsMediaDataFinish(media_data) == 1) {
                 Finance.FreeMediaData(media_data);
-                JdbcTemplate  jdbcTemplate = new JdbcTemplate(DataSource.init());
+                JdbcTemplate  jdbcTemplate = new JdbcTemplate(DB.getInstance());
                 String sql = String.format("UPDATE %s SET media_code=1 WHERE sdkfield=?",this.tableName);
                 jdbcTemplate.update(sql,sdkField);
                 System.out.println("获取结束");

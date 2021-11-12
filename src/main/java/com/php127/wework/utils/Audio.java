@@ -8,7 +8,7 @@
  */
 
 
-package com.php127.wework;
+package com.php127.wework.utils;
 
 import it.sauronsoftware.jave.AudioAttributes;
 import it.sauronsoftware.jave.Encoder;

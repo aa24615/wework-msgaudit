@@ -8,7 +8,6 @@
  */
 package com.php127.wework;
 
-
 //import org.springframework.boot.SpringApplication;
 //import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -16,11 +15,11 @@ package com.php127.wework;
 //@SpringBootApplication()
 public class Application {
 
+    /**
+     * 主方法
+     */
     public static void main(String[] args) {
-
         System.out.println("==================开始运行==================");
-        //System.out.println(System.getProperty("java.library.path"));
-        //SpringApplication.run(Application.class, args);
         Start.run();
     }
 }

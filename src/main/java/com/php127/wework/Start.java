@@ -10,6 +10,7 @@
 
 package com.php127.wework;
 
+import com.php127.wework.message.Threads;
 import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 import java.util.Map;
@@ -20,23 +21,28 @@ public class Start {
 
 
     public static void run(){
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSource.init());
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(DB.getInstance());
 
         System.out.println("===============init===============");
 
         //创建企业表
         createCorpListTable();
 
+
         List<Map<String, Object>> list = jdbcTemplate.queryForList("SELECT * FROM corplist where status=1");
+
+        if(list.size()==0){
+            System.out.println("没有企业可拉取");
+            return;
+        }
 
         for (Map<String, Object> map : list) {
 
-            //判断表是否存在
+
             String corpid = String.valueOf(map.get("corpid"));
             String secret = String.valueOf(map.get("secret"));
             String prikey = String.valueOf(map.get("prikey"));
 
-            System.out.println("corpid:"+corpid);
 
             //创建聊天记录表
             createMessageTable(corpid);
@@ -45,44 +51,40 @@ public class Start {
             createMsgFileDir(corpid);
 
             //开启线程
-            ThreadMessage t = new ThreadMessage(corpid,secret,prikey);
-            t.start();
+            //开启线程
+            Threads thread = new Threads(corpid,secret,prikey);
+            thread.start();
         }
 
     }
 
+    private static void createCorpListTable() {
 
-    /**
-     * 创建企业表.
-     *
-     * @return void
-     *
-     * @author 读心印 <aa24615@qq.com>
-     */
-    private static void createCorpListTable(){
-
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSource.init());
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(DB.getInstance());
 
         String sql = "select count(*) from information_schema.tables where table_name = 'corplist'";
-        int count = jdbcTemplate.queryForObject(sql,Integer.class);
-        System.out.println("是否创建表:"+count);
+        int count = jdbcTemplate.queryForObject(sql, Integer.class);
+        System.out.println("是否创建企业表:" + count);
 
-        sql = "CREATE TABLE `corplist`  (\n" +
-                "  `id` int(11) NOT NULL AUTO_INCREMENT,\n" +
-                "  `corpid` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '企业id',\n" +
-                "  `secret` varchar(43) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '聊天内容存档的Secret',\n" +
-                "  `corpname` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '企业名称',\n" +
-                "  `prikey` varchar(2048) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密文的私有密钥',\n" +
-                "  `limits` int(11) NOT NULL DEFAULT 100 COMMENT '一次拉取的消息条数，最大值1000条',\n" +
-                "  `timeout` int(11) NOT NULL DEFAULT 5 COMMENT '超时时间(秒)',\n" +
-                "  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0:用户无效 1:用户有效',\n" +
-                "  `update` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:无更新 1:有更新',\n" +
-                "  PRIMARY KEY (`id`) USING BTREE,\n" +
-                "  UNIQUE INDEX `corpid`(`corpid`) USING BTREE\n" +
-                ") ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;";
+        if (count == 0) {
 
-        jdbcTemplate.update(sql);
+            sql = "CREATE TABLE `corplist`  (\n" +
+                    "  `id` int(11) NOT NULL AUTO_INCREMENT,\n" +
+                    "  `corpid` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '企业id',\n" +
+                    "  `secret` varchar(43) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '聊天内容存档的Secret',\n" +
+                    "  `corpname` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '企业名称',\n" +
+                    "  `prikey` varchar(2048) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密文的私有密钥',\n" +
+                    "  `limits` int(11) NOT NULL DEFAULT 100 COMMENT '一次拉取的消息条数，最大值1000条',\n" +
+                    "  `timeout` int(11) NOT NULL DEFAULT 5 COMMENT '超时时间(秒)',\n" +
+                    "  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0:用户无效 1:用户有效',\n" +
+                    "  `update` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:无更新 1:有更新',\n" +
+                    "  PRIMARY KEY (`id`) USING BTREE,\n" +
+                    "  UNIQUE INDEX `corpid`(`corpid`) USING BTREE\n" +
+                    ") ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;";
 
+
+            jdbcTemplate.update(sql);
+        }
     }
 
     /**
@@ -93,11 +95,11 @@ public class Start {
      * @author 读心印 <aa24615@qq.com>
      */
     private static void createMessageTable(String corpid){
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSource.init());
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(DB.getInstance());
 
         String sql = "select count(*) from information_schema.tables where table_name = '"+"message_"+corpid+"' ";
         int count = jdbcTemplate.queryForObject(sql,Integer.class);
-        System.out.println("是否创建表:"+count);
+        System.out.println("是否创建聊天记录表["+corpid+"]:"+count);
 
         if(count==0){
 
@@ -127,19 +129,18 @@ public class Start {
         }
     }
 
-
-    /**
-     * 创建附件目录.
-     *
-     * @return void
-     *
-     * @author 读心印 <aa24615@qq.com>
-     */
     private static void createMsgFileDir(String corpid){
 
-        File file=new File("./msgfile/"+corpid+"/");
+        //创建根目录
+        File file = new File("./msgfile/");
         if(!file.exists()){
             file.mkdir();
+        }
+
+        //创建企业目录
+        File msgfile =new File("./msgfile/"+corpid+"/");
+        if(!msgfile.exists()){
+            msgfile.mkdir();
         }
     }
 }

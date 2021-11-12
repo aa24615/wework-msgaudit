@@ -27,6 +27,7 @@ typedef struct MediaData {
 */
 
 public class Finance {
+
     public native static long NewSdk();
 
     /**

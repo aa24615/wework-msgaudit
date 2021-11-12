@@ -7,7 +7,7 @@
  * with this source code in the file LICENSE.
  */
 
-package com.tencent.wework;
+package com.php127.wework.utils;
 
 import org.apache.commons.codec.binary.Base64;
 import javax.crypto.Cipher;

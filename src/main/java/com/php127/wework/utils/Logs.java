@@ -7,7 +7,7 @@
  * with this source code in the file LICENSE.
  */
 
-package com.php127.wework;
+package com.php127.wework.utils;
 
 
 import org.apache.logging.log4j.LogManager;

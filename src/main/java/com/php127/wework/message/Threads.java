@@ -7,15 +7,15 @@
  * with this source code in the file LICENSE.
  */
 
-package com.php127.wework;
+package com.php127.wework.message;
 
-class ThreadMessage extends Thread {
-    private Thread t;
+public class Threads extends Thread {
+    private Thread thread;
     private String corpid;
     private String secret;
     private String prikey;
 
-    ThreadMessage( String corpid, String secret, String prikey) {
+    public Threads(String corpid, String secret, String prikey) {
         this.corpid = corpid;
         this.secret = secret;
         this.prikey = prikey;
@@ -35,9 +35,9 @@ class ThreadMessage extends Thread {
 
     public void start () {
         System.out.println("开始线程: " +  this.corpid );
-        if (t == null) {
-            t = new Thread (this);
-            t.start ();
+        if (thread == null) {
+            thread = new Thread (this);
+            thread.start ();
         }
     }
 }
