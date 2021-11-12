@@ -1,7 +1,7 @@
 # wework-msgaudit
 
-企业微信-会话内容存档     
-实时拉取企业微信聊天记录java版SDK  
+企业微信-会话内容存档       
+实时拉取企业微信聊天记录java版SDK    
 [官方文档](https://open.work.weixin.qq.com/api/doc/90000/90135/91774)
 
 ### 功能
@@ -27,7 +27,7 @@ mvn install
 - mysql配置
 
 ```shell script
-src/main/java/com/php127/wework/DataSource.java
+src/main/java/com/php127/wework/DB.java
 ```
 
 - 把动态库拷贝到系统
@@ -101,7 +101,7 @@ mvn package
 ### 运行
 
 ```shell script
-java -jar target/wework-msgaudit-1.0.jar
+java -jar target/wework-msgaudit-2.0.jar
 ```
 
 ### 进程守护
@@ -150,11 +150,17 @@ docker rmi wework
 - 可以运行无法拉取?
 
     是否将服务器ip添加到企业微信后台的白名单中,密钥等是否配置正确
+  
+- 解密失败?
+
+  请生成2048bit && PKCS#8 [在线生成](http://www.metools.info/code/c80.html)  
+  如果您使用的是 PKCS#1 请转换为  PKCS#8
+  > 另外加密有版本区分,旧的公钥必需使用旧的私钥才能解密  
+  > 如果实在是无法解密,请使用新的密钥对新的聊天记录进行解密
 
 
 ###  参与贡献
 
-> 作者非java专业开发,有设计不合理的地方,欢迎大佬们指点
 
 1. fork 当前库到你的名下
 2. 在你的本地修改完成审阅过后提交到你的仓库
