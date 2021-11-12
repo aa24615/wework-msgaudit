@@ -12,6 +12,8 @@
     </parent>
 
 
+
+
     <groupId>com.php127.wework</groupId>
     <artifactId>wework-msgaudit</artifactId>
     <version>1.0</version>
