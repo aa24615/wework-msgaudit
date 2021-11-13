@@ -33,6 +33,7 @@ public class Message {
     public Message(String corpid, String secret, String prikey){
 
         this.sdk = Finance.NewSdk();
+
         this.corpid = corpid;
         this.tableName = "message_"+this.corpid;
         int state = Finance.Init(sdk,corpid,secret);
@@ -87,65 +88,59 @@ public class Message {
         return  0;
     }
     //获取列表
-    public void getList(){
+    public void getList() throws Exception{
 
 
         System.out.println("======================================");
-        try {
 
-            long seqs = this.getSeq();
-            int limit = 1000;
-            long slice = Finance.NewSlice();
-            System.out.println("起始数:"+seqs);
-            int ret = Finance.GetChatData(this.sdk, seqs, limit, "", "", 100, slice);
-            if (ret != 0) {
-                System.out.println("失败:" + ret);
-                return;
-            }
 
-            String json = Finance.GetContentFromSlice(slice);
-            JSONObject jo = new JSONObject(json);
+        long seqs = this.getSeq();
+        int limit = 1000;
+        long slice = Finance.NewSlice();
+        System.out.println("起始数:"+seqs);
+        int ret = Finance.GetChatData(this.sdk, seqs, limit, "", "", 100, slice);
+        if (ret != 0) {
+            System.out.println("失败:" + ret);
+            return;
+        }
 
-            String errmsg = jo.getString("errmsg");
-            int errcode = jo.getInt("errcode");
+        String json = Finance.GetContentFromSlice(slice);
+        JSONObject jo = new JSONObject(json);
+
+        String errmsg = jo.getString("errmsg");
+        int errcode = jo.getInt("errcode");
 
 //            System.out.println("原始:"+json);
 
-            if(errcode==0){
-                System.out.println("获取成功:"+errmsg);
-                JSONArray chatdata = jo.getJSONArray("chatdata");
-                System.out.println("消息数:"+chatdata.length());
-                for (int i = 0; i < chatdata.length(); i++) {
-                    String item = chatdata.get(i).toString();
-                    JSONObject data = new JSONObject(item);
-                    String encrypt_random_key = data.getString("encrypt_random_key");
-                    String encrypt_chat_msg = data.getString("encrypt_chat_msg");
-                    long seq = data.getLong("seq");
+        if(errcode==0){
+            System.out.println("获取成功:"+errmsg);
+            JSONArray chatdata = jo.getJSONArray("chatdata");
+            System.out.println("消息数:"+chatdata.length());
+            for (int i = 0; i < chatdata.length(); i++) {
+                String item = chatdata.get(i).toString();
+                JSONObject data = new JSONObject(item);
+                String encrypt_random_key = data.getString("encrypt_random_key");
+                String encrypt_chat_msg = data.getString("encrypt_chat_msg");
+                long seq = data.getLong("seq");
 //                    System.out.println("密钥:"+encrypt_random_key);
 //                    System.out.println("密文:"+encrypt_chat_msg);
-                    String message = this.decryptData(encrypt_random_key,encrypt_chat_msg);
-                    System.out.println("消息内容:"+message);
-                    if(this.saveMessage(seq,message)){
-                        if(this.seqs<seq){
-                            this.seqs=seq;
-                        }
+                String message = this.decryptData(encrypt_random_key,encrypt_chat_msg);
+                System.out.println("消息内容:"+message);
+                if(this.saveMessage(seq,message)){
+                    if(this.seqs<seq){
+                        this.seqs=seq;
                     }
                 }
-            }else{
-                System.out.println("获取失败:"+this.corpid);
-                System.out.println("errcode:"+errcode+":"+errmsg);
-                return;
             }
-
-            //关闭
-            Finance.FreeSlice(slice);
-
-            Thread.sleep(10000);
-            this.getList();
-        }catch (InterruptedException e){
-            System.out.println("异常:"+this.corpid);
-            return;
+        }else{
+            System.out.println("获取失败:"+this.corpid);
+            System.out.println("errcode:"+errcode+":"+errmsg);
+            throw new Exception("获取失败");
         }
+
+        //关闭
+        Finance.FreeSlice(slice);
+
     }
 
 
