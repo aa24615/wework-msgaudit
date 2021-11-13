@@ -166,6 +166,11 @@ docker rmi wework
 2. 在你的本地修改完成审阅过后提交到你的仓库
 3. 提交 PR 并描述你的修改，等待合并
 
+
+### 联系我们
+
+QQ交流群 [825443653](https://jq.qq.com/?_wv=1027&k=It3u9hrp)
+
 ###  License
 
 [MIT license](https://opensource.org/licenses/MIT)
