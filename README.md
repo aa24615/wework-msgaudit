@@ -26,17 +26,19 @@ mvn install
 
 - mysql配置
 
-```shell script
+```shell
 src/main/java/com/php127/wework/DB.java
 ```
 
 - 把动态库拷贝到系统
 
-```shell script
+```shell
 cp ./lib/libWeWorkFinanceSdk_Java.so /usr/lib/libWeWorkFinanceSdk_Java.so
 ```
 
-- idea中将 `lib/jave/jave-1.0.2.jar` 目录设为库
+- 依懒包
+
+idea中将 `lib/jave/jave-1.0.2.jar` 目录设为库
 
 
 ## 数据
@@ -158,7 +160,7 @@ docker rmi wework
 - 解密失败?
 
   请生成2048bit && PKCS#8 [在线生成](http://www.metools.info/code/c80.html)  
-  如果您使用的是 PKCS#1 请转换为  PKCS#8
+  如果您使用的是 PKCS#1 请转换为  PKCS#8 [转换教程](https://www.cnblogs.com/cocoajin/p/10510574.html)   
   > 另外加密有版本区分,旧的公钥必需使用旧的私钥才能解密  
   > 如果实在是无法解密,请使用新的密钥对新的聊天记录进行解密
 
