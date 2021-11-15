@@ -36,6 +36,9 @@ src/main/java/com/php127/wework/DB.java
 cp ./lib/libWeWorkFinanceSdk_Java.so /usr/lib/libWeWorkFinanceSdk_Java.so
 ```
 
+- idea中将 `lib/jave/jave-1.0.2.jar` 目录设为库
+
+
 ## 数据
 
 ### 数据表

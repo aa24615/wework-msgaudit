@@ -34,6 +34,8 @@ public class Threads extends Thread {
                 }
             }
         }catch (UnsatisfiedLinkError e){
+
+            System.out.println(e.getMessage());
             System.out.println("找不到动态库 WeWorkFinanceSdk_Java.so" );
             System.out.println("请使用linux系统,并将动态库拷贝到系统" );
         }catch (Exception e) {
