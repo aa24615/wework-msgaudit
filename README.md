@@ -16,11 +16,6 @@
 2. mvn
 3. mysql >= 5.6
 
-### 安装
-
-```shell script
-mvn install
-```
 
 ### 配置
 
@@ -92,11 +87,12 @@ idea中将 `lib/jave/jave-1.0.2.jar` 目录设为库
 聊天中产生的图片,语音,视频,doc文档等文件 默认下载到 `msgfile/coprid_name` 目录下   
 您可以在nginx上添加一个静态站点指向 `msgfile` 目录 即可访问资源
 
-### 编译
+### 安装
 
 ```shell script
-mvn compile
+mvn install
 ```
+
 
 ### 打包
 
@@ -120,27 +116,14 @@ resert.ini 为重启进程守护 配合 /bin/restart.sh 进行使用
 
 ### 使用docker运行
 
-- Dockerfile
-```shell script
+详情请见 `Dockerfile` 与 `docker.sh`
 
-FROM daocloud.io/library/java
-COPY ./ /app/wework
-COPY ./lib/libWeWorkFinanceSdk_Java.so /usr/lib/libWeWorkFinanceSdk_Java.so
-WORKDIR /app/wework
-RUN java -jar target/wework-msgaudit-1.0.jar
-
+```shell
+sh docker.sh
 ```
 
-- docker.sh
-
-```shell script
-
-docker build -t wework .
-docker run -it --rm --net=net --name wework-msgaudit wework
-docker rmi wework
-
-```
 ###  常见问题
+
 - 注意,注意,注意,重要的事说三遍?
 
 ```text
@@ -167,11 +150,9 @@ docker rmi wework
 
 ###  参与贡献
 
-
 1. fork 当前库到你的名下
 2. 在你的本地修改完成审阅过后提交到你的仓库
 3. 提交 PR 并描述你的修改，等待合并
-
 
 ### 联系我们
 
