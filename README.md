@@ -52,12 +52,13 @@ cp ./lib/libWeWorkFinanceSdk_Java.so /usr/lib/libWeWorkFinanceSdk_Java.so
 |corpid|企业id|
 |secret|会话存档secret|
 |corpname|企业名称|
-|prikey|私钥|
+|prikey|私钥 注意:去掉头尾|
 |limits|一页拉取条数|
 |timeout|拉取超时(秒)|
 |status|状态|
 |update|是否更新|
 
+> 注意: 私钥请去掉头尾,注意格空
 
 #### 聊天记录表 ( message_wwbxxxxxx7aed6f )
 
