@@ -116,11 +116,14 @@ resert.ini 为重启进程守护 配合 /bin/restart.sh 进行使用
 
 ### 使用docker运行
 
-详情请见 `Dockerfile` 与 `docker.sh`
+docker-compose.xml `wework-docker/docker-compose.xml`详细配置说明 [docker-compose](https://www.runoob.com/docker/docker-compose.html)
+
+启动
 
 ```shell
-sh docker.sh
+docker-compose up -d
 ```
+
 
 ###  常见问题
 
