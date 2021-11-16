@@ -9,7 +9,12 @@
 
 package com.php127.wework;
 
+
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+import java.sql.SQLNonTransientConnectionException;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 
 public class DB {
 
@@ -23,5 +28,14 @@ public class DB {
         //密码
         dataSource.setPassword("test123");
         return dataSource;
+    }
+
+    public static JdbcTemplate getJdbcTemplate(){
+
+        JdbcTemplate jdbcTemplate = null;
+
+        jdbcTemplate = new JdbcTemplate(getInstance());
+
+        return jdbcTemplate;
     }
 }

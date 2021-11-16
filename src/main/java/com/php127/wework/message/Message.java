@@ -15,7 +15,7 @@ import com.php127.wework.utils.RSAEncrypt;
 import com.php127.wework.utils.Audio;
 import org.json.JSONObject;
 import org.json.JSONArray;
-import org.springframework.jdbc.core.JdbcTemplate;
+
 import org.springframework.util.StringUtils;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -73,13 +73,13 @@ public class Message {
             System.out.println("大于0");
             return this.seqs;
         }
-        JdbcTemplate  jdbcTemplate = new JdbcTemplate(DB.getInstance());
+
         String sql = String.format("SELECT count(*) FROM %s",this.tableName);
 
-        int count = jdbcTemplate.queryForObject(sql,Integer.class);
+        int count = DB.getJdbcTemplate().queryForObject(sql,Integer.class);
         if(count>0){
             sql = String.format("SELECT seq FROM %s order by seq desc LIMIT 1",this.tableName);
-            long seq = jdbcTemplate.queryForObject(sql,Integer.class);
+            long seq = DB.getJdbcTemplate().queryForObject(sql,Integer.class);
             System.out.println("初始seq:"+seq);
             this.seqs = seq;
             return seq;
@@ -289,17 +289,16 @@ public class Message {
         String created = ft.format(Now);
 
         //入库啦
-        JdbcTemplate  jdbcTemplate = new JdbcTemplate(DB.getInstance());
         String sql;
         sql = String.format("SELECT count(*) FROM %s WHERE msgid='%s'",this.tableName,msgid);
 
-        if(jdbcTemplate.queryForObject(sql,Integer.class)==0){
+        if(DB.getJdbcTemplate().queryForObject(sql,Integer.class)==0){
             sql = String.format("INSERT INTO %s " +
                     "(msgid,seq,`action`,msgfrom,tolist,roomid,msgtime,msgtype,text,sdkfield,msgdata,created,media_path) " +
                     "VALUES " +
                     "(?,?,?,?,?,?,?,?,?,?,?,?,?)",this.tableName);
             try {
-                int res = jdbcTemplate.update(sql,msgid,seq,action,msgfrom,tolist,roomid,msgtime,msgtype,text,sdkfield,msgdata,created,media_path);
+                int res = DB.getJdbcTemplate().update(sql,msgid,seq,action,msgfrom,tolist,roomid,msgtime,msgtype,text,sdkfield,msgdata,created,media_path);
                 System.out.println("插入状态:"+res);
                 if(res>=1){
 
@@ -342,9 +341,8 @@ public class Message {
             }
             if (Finance.IsMediaDataFinish(media_data) == 1) {
                 Finance.FreeMediaData(media_data);
-                JdbcTemplate  jdbcTemplate = new JdbcTemplate(DB.getInstance());
                 String sql = String.format("UPDATE %s SET media_code=1 WHERE sdkfield=?",this.tableName);
-                jdbcTemplate.update(sql,sdkField);
+                DB.getJdbcTemplate().update(sql,sdkField);
                 System.out.println("获取结束");
 
                 if(ext.equals("amr")){

@@ -28,7 +28,7 @@ src/main/java/com/php127/wework/DB.java
 - 把动态库拷贝到系统
 
 ```shell
-cp ./lib/libWeWorkFinanceSdk_Java.so /usr/lib/libWeWorkFinanceSdk_Java.so
+cp ./lib/WeWorkFinanceSdk.so /usr/lib/WeWorkFinanceSdk.so
 ```
 
 - 依懒包

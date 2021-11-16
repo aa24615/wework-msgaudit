@@ -11,7 +11,7 @@
 package com.php127.wework;
 
 import com.php127.wework.message.Threads;
-import org.springframework.jdbc.core.JdbcTemplate;
+
 import java.util.List;
 import java.util.Map;
 import java.io.*;
@@ -21,7 +21,7 @@ public class Start {
 
 
     public static void run(){
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(DB.getInstance());
+
 
         System.out.println("===============init===============");
 
@@ -29,7 +29,7 @@ public class Start {
         createCorpListTable();
 
 
-        List<Map<String, Object>> list = jdbcTemplate.queryForList("SELECT * FROM corplist where status=1");
+        List<Map<String, Object>> list = DB.getJdbcTemplate().queryForList("SELECT * FROM corplist where status=1");
 
         if(list.size()==0){
             System.out.println("没有企业可拉取");
@@ -60,10 +60,8 @@ public class Start {
 
     private static void createCorpListTable() {
 
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(DB.getInstance());
-
         String sql = "select count(*) from information_schema.tables where table_name = 'corplist'";
-        int count = jdbcTemplate.queryForObject(sql, Integer.class);
+        int count = DB.getJdbcTemplate().queryForObject(sql, Integer.class);
         System.out.println("是否创建企业表:" + count);
 
         if (count == 0) {
@@ -83,7 +81,7 @@ public class Start {
                     ") ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;";
 
 
-            jdbcTemplate.update(sql);
+            DB.getJdbcTemplate().update(sql);
         }
     }
 
@@ -95,10 +93,9 @@ public class Start {
      * @author 读心印 <aa24615@qq.com>
      */
     private static void createMessageTable(String corpid){
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(DB.getInstance());
 
         String sql = "select count(*) from information_schema.tables where table_name = '"+"message_"+corpid+"' ";
-        int count = jdbcTemplate.queryForObject(sql,Integer.class);
+        int count = DB.getJdbcTemplate().queryForObject(sql,Integer.class);
         System.out.println("是否创建聊天记录表["+corpid+"]:"+count);
 
         if(count==0){
@@ -125,7 +122,7 @@ public class Start {
                     "  KEY `msgid` (`msgid`) USING BTREE\n" +
                     ") ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;";
 
-            jdbcTemplate.update(sql);
+            DB.getJdbcTemplate().update(sql);
         }
     }
 

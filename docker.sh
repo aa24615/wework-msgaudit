@@ -7,8 +7,8 @@
 #  Copyright © 2020 读心印. All rights reserved.
 
 
-mvn compile && mvn package
+#mvn compile && mvn package
 
-docker build -t java_wework .
-docker run -it --rm --net=net --name wework java_wework
+docker build -t app .
+docker run -it --rm --net=net --name wework app
 docker rmi java_wework
