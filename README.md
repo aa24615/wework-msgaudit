@@ -106,20 +106,14 @@ mvn package
 java -jar target/wework-msgaudit-2.0.jar
 ```
 
-### 进程守护
-
-使用 supervisord 进行守护 请见 supervisord 文件夹  
-详细配置请参考 [supervisord官方文档](http://supervisord.org/)   
-work.ini 为java进程守护 运行目录与日志等请自行修改    
-resert.ini 为重启进程守护 配合 /bin/restart.sh 进行使用      
-/bin/restart.sh 是一个redis队列,当有企业变动时,推送队列到redis来重启进程  
 
 ### 使用docker运行
 
-docker-compose.xml `wework-docker/docker-compose.xml`详细配置说明 [docker-compose](https://www.runoob.com/docker/docker-compose.html)
+docker-compose.xml `wework-docker/docker-compose.xml` 详细配置说明 [docker-compose](https://www.runoob.com/docker/docker-compose.html)
+
+进入 `wework-docker` 目录
 
 启动
-
 ```shell
 docker-compose up -d
 ```
