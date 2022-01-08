@@ -26,7 +26,7 @@ public class DB {
         //用户名
         dataSource.setUsername("root");
         //密码
-        dataSource.setPassword("root");
+        dataSource.setPassword("123abcAAA.");
         return dataSource;
     }
 
