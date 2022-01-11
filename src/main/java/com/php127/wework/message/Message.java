@@ -182,33 +182,43 @@ public class Message {
         String sdkfield = "";
         String text = "";
         String ext = "";
+        String action = "";
 
-        String action = json.getString("action");
+        try {
+            action = json.getString("action");
+        }catch (Exception ignored){
+
+        }
 
         try {
             msgtime = json.getLong("msgtime");
         }catch (Exception e){
-            msgtime = json.getLong("time");
+            try{
+                msgtime = json.getLong("time");
+            }catch (Exception ignored){
+
+            }
         }
+
         if(msgtime<2000000000){
             msgtime = msgtime*1000;
         }
 
         try {
             msgfrom = json.getString("from");
-        }catch (Exception e){
+        }catch (Exception ignored){
 
         }
 
         try {
             roomid = json.getString("roomid");
-        }catch (Exception e){
+        }catch (Exception ignored){
 
         }
 
         try {
             msgtype = json.getString("msgtype");
-        }catch (Exception e){
+        }catch (Exception ignored){
 
         }
 
