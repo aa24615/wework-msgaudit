@@ -22,7 +22,7 @@ public class DB {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         //地址:端口
-        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/test?useSSL=false&characterEncoding=utf-8&autoReconnect=true");
+        dataSource.setUrl("jdbc:mysql://mysql:3306/test?useSSL=false&characterEncoding=utf-8&autoReconnect=true");
         //用户名
         dataSource.setUsername("root");
         //密码

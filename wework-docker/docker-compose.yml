@@ -1,18 +1,18 @@
 # yaml 配置实例
 version: '3'
 services:
-#  mysql:
-#    image: "mysql:5.7"
-#    ports:
-#      - "3306:3306"
-#    volumes:
-#      - "./mysql/data:/var/lib/mysql"
-#    environment:
-#      MYSQL_ROOT_PASSWORD: root
-#    restart: always
-#    privileged: true
-#    networks:
-#      - webnet
+  mysql:
+    image: "mysql:5.7"
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./mysql/data:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    restart: always
+    privileged: true
+    networks:
+      - webnet
 #  redis:
 #    image: "redis:6.2.5"
 #    ports:
@@ -30,12 +30,14 @@ services:
     image: daocloud.io/library/java
     restart: always
     privileged: true
+    ports:
+      - "8080:8080"
     networks:
       - webnet
     volumes:
       - "../lib/WeWorkFinanceSdk.so:/usr/lib/WeWorkFinanceSdk.so"
-      - "../target/wework-msgaudit-2.0.jar:/var/run/wework-msgaudit-2.0.jar"
-    command: "java -jar /var/run/wework-msgaudit-2.0.jar"
+      - "../target/wework-msgaudit-3.0.jar:/var/run/wework-msgaudit-3.0.jar"
+    command: "java -jar /var/run/wework-msgaudit-3.0.jar"
 networks:
   webnet:
     driver: bridge

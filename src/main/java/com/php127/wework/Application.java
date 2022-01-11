@@ -8,18 +8,18 @@
  */
 package com.php127.wework;
 
-//import org.springframework.boot.SpringApplication;
-//import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.php127.wework.controller.IndexController;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-//@SpringBootApplication()
+@SpringBootApplication()
 public class Application {
 
     /**
      * 主方法
      */
     public static void main(String[] args) {
-        System.out.println("==================开始运行==================");
-        Start.run();
+        SpringApplication.run(IndexController.class, args);
     }
 }

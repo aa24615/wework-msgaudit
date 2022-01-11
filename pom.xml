@@ -14,7 +14,7 @@
 
     <groupId>com.php127.wework</groupId>
     <artifactId>wework-msgaudit</artifactId>
-    <version>2.0</version>
+    <version>3.0</version>
 
 
     <dependencies>
@@ -45,6 +45,14 @@
             <systemPath>${project.basedir}/lib/jave/jave-1.0.2.jar</systemPath>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/it.sauronsoftware/jave -->
+<!--        <dependency>-->
+<!--            <groupId>it.sauronsoftware</groupId>-->
+<!--            <artifactId>jave</artifactId>-->
+<!--            <version>1.0.2</version>-->
+<!--        </dependency>-->
+
+
         <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
         <dependency>
             <groupId>commons-codec</groupId>
@@ -61,19 +69,10 @@
         </dependency>
 
 
-        <!-- https://mvnrepository.com/artifact/com.mchange/c3p0 -->
-        <dependency>
-            <groupId>com.mchange</groupId>
-            <artifactId>c3p0</artifactId>
-            <version>0.9.5.5</version>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jdbc</artifactId>
         </dependency>
-
-
 
         <dependency>
             <groupId>mysql</groupId>
@@ -81,23 +80,15 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!--log4j-->
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.13.3</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
         </dependency>
-
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.17.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.sun.jna</groupId>
-            <artifactId>jna</artifactId>
-            <version>3.0.9</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
     </dependencies>
