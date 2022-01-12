@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html th:replace="~{base :: layout(~{::title}, ~{::div})}" xmlns:th="http://www.w3.org/1999/xhtml">
+xmlns:layout="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${name}"> - QAdmin后台模板</title>
+</head>
+<body>
+<div class="right p20">
+    <h1>主体内容</h1>
+    <hr>
+    <p>当前路由: <span th:text="${name}"></span></p>
+
+    <p>本页仅作参考,实际内容自行修改</p>
+
+</div>
+
+</body>
+</html>

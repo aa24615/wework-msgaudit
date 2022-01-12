@@ -12,7 +12,6 @@ package com.php127.wework;
 
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-import java.sql.SQLNonTransientConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 

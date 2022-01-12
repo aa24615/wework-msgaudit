@@ -13,18 +13,18 @@ services:
     privileged: true
     networks:
       - webnet
-#  redis:
-#    image: "redis:6.2.5"
-#    ports:
-#      - "6379:6379"
-#    volumes:
-#      - "./redis/data:/data/redis/data"
-#      - "./redis/redis.conf:/etc/redis.conf"
-#    command: "redis-server /etc/redis.conf"
-#    restart: always
-#    privileged: true
-#    networks:
-#      - webnet
+  redis:
+    image: "redis:6.2.5"
+    ports:
+      - "6379:6379"
+    volumes:
+      - "./redis/data:/data/redis/data"
+      - "./redis/redis.conf:/etc/redis.conf"
+    command: "redis-server /etc/redis.conf"
+    restart: always
+    privileged: true
+    networks:
+      - webnet
   wework:
 #    build: ./java
     image: daocloud.io/library/java
