@@ -19,7 +19,7 @@ import java.io.File;
 
 public class Audio {
 
-    public static void toMp3(String sourcePath, String targetPath) {
+    public static boolean toMp3(String sourcePath, String targetPath) {
 
         File source = new File(sourcePath);
         File target = new File(targetPath);
@@ -31,8 +31,10 @@ public class Audio {
         Encoder encoder = new Encoder();
         try {
             encoder.encode(source, target, attrs);
+            return true;
         } catch (Exception e){
-            e.printStackTrace();
+            System.out.println("tomp3 error: "+e.getMessage());
+            return false;
         }
     }
 }
