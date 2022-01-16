@@ -14,3 +14,16 @@ CREATE TABLE IF NOT EXISTS `wework_corplist` (
     PRIMARY KEY ( `id` ) USING BTREE,
     UNIQUE INDEX `corpid` ( `corpid` ) USING BTREE
     ) ENGINE = INNODB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Table structure for wework_admin
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `wework_admin` (
+    `id` int(10) NOT NULL AUTO_INCREMENT,
+    `username` varchar(30) CHARACTER SET utf8 NOT NULL DEFAULT '',
+    `password` varchar(32) CHARACTER SET utf8 NOT NULL DEFAULT '',
+    `state` tinyint(1) DEFAULT '1',
+    `created_at` timestamp NULL DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `username` (`username`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET = utf8;
