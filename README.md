@@ -2,7 +2,8 @@
 
 企业微信-会话内容存档       
 实时拉取企业微信聊天记录java版SDK    
-[官方文档](https://open.work.weixin.qq.com/api/doc/90000/90135/91774)
+在使用前,请认真阅读官方文档  
+[https://open.work.weixin.qq.com/api/doc/90000/90135/91774](https://open.work.weixin.qq.com/api/doc/90000/90135/91774)
 
 ### 功能
 
@@ -13,7 +14,7 @@
 ### 要求
 
 1. jdk >= 8.0
-2. mvn
+2. mvn >= 3.x
 3. mysql >= 5.6
 
 
@@ -30,10 +31,6 @@ src/main/java/com/php127/wework/DB.java
 ```shell
 cp ./lib/WeWorkFinanceSdk.so /usr/lib/WeWorkFinanceSdk.so
 ```
-
-- 依懒包
-
-idea中将 `lib/jave/jave-1.0.2.jar` 目录设为库
 
 
 ## 数据
