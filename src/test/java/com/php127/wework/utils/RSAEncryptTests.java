@@ -81,4 +81,50 @@ public class RSAEncryptTests {
 
         Assertions.assertEquals("test",str);
     }
+
+    @Test
+    public void testDecrypt2(){
+
+        String str = "F3PwrUMoUvWtiBnMpDaLrlNAfpTnHVsElcFhmC8AMVcFA7Ie4ugtl7ZyUPfiuuHauqKAf7Osz3XTwqEEQj0NTgj+kLgorznsCa8gJxOLRaWpPJy873OS9ouJwAzxqC3L+fCpVCdXamVEeaMkXXkOujGpc4xuJ2FD1VSjejCNKOB6BlUOePPcnVv+8llZDzPw4UTHkIGPmAz8Iz1hFPxo0qAQAUJLW2G+ds7YbP8lgZpiqw+f91YH2WL8PUju2U6RHrG0DKo4+2NIHk+d4qCTo6tmcKdrIz6VnvhzFNR8oTyL2oyn3/sah7CLkS7VZ6TOOpNIKL+lgdmQU21wxXRW3g==";
+
+        String outStr = null;
+
+
+        String privateKey =
+                "-----BEGIN PRIVATE KEY-----\n"+
+                "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCjeb5MFjnI+Xoe\n" +
+                "z5whw0cZG0jzNaVKxpAWJPPkqL2zfOvS0SmHIIMT988Hzh04Bdxt8WUMWv0W/Bvz\n" +
+                "H39ZTpTzrGgtx+DTnqZN0IRDKozTDEBD2lSfrMpUy6dTrwsDCTR+vISaYG8cad2Q\n" +
+                "ooeTmRRqokqYTwe/YsM/xhpsDtmVHYRaehzPK23/T8q9iBIXgU31kVSwhrRKegzm\n" +
+                "xDX9Ve8jRCEL+xN/dPmKBvFA6Wz5t7jAJZ+dmdBqaRuRpffkweZ1zy+CbvE0j0mL\n" +
+                "5ddEco/+p/uL4I1qLhxQvZuV3x1dA5ou7DmEqeVq4o6HUeFZwlvE4X+pzc9PotDF\n" +
+                "qi4A2fnpAgMBAAECggEBAIMgLBwr1731HpeIP9x1Hpps4F71MNiB3SFmEpvfHgrS\n" +
+                "sPYw//Z7haiGpXHFSnqdeOpXLo5yjX/aSTECmsuv1JqAODBAm34jS5IvJ2gYwUyo\n" +
+                "DwReJHLPzpuln1nolhShVZIy9Mo/f+Byql5RgB5MM6w08VCqU7SYK7UD2j3Cy5Rn\n" +
+                "CDdf2N3mluNtcZie8/SJR6A1QkhlGfmTWrK4wXugf95qzppIwn9eP52n42E1mYa7\n" +
+                "bk2yBoNqTRhOv2AqWyC7daOJ5tvbaa9N2ATabepncL98ISS0kGcNKzBEHA6sqYEv\n" +
+                "o3KMp7C2oBA5jl7BkQrYKuOX6dFUJlK2AqVb9fIE2WECgYEA1fIzdKmAJnFWPfeg\n" +
+                "YpNsFM8YLY/NFYbbwaGqAPVrdqvyM2aNWQrPfO2tzfSZObZ53Ev/xc6sFFOutnCs\n" +
+                "b3S/TpSzFYhqjXDByKqJKyxDnCLYrr22HvSg7j6mC7aW+MDWpDus9kKbeIaOl+Mn\n" +
+                "X7f2VHiTAyc2Ax3UgfGzRhkM+usCgYEAw5vbhKqZm5RXzm2y86NrYWNDulObzhEe\n" +
+                "9Hp/mNyVceMlS7Uh2g0C/lNNZ/pCvvzbgQLkawVtrH4RWmuco3XIb3HYTRAYiyOk\n" +
+                "80o6Vfitq8ojNvv0LPOOklMoNyYbGv9mF1PTfbWd/FhDI9UPWlb9XJmgbgzeWqxj\n" +
+                "kq2iswJHgXsCgYEAzhumtp0Ud/R3wPrt6Ald9i4MfNgsGrDwxHmZ7ZKBFLJRgnMp\n" +
+                "eL6RZSkUZ3Vcp9zDSRduMIIKBQsZJWkmtbkjE/DtFbF19QzLoyWnP5BFEgX/+VeK\n" +
+                "PAgvgVWZYW9lwf8EyPM0jYldfZ8jf++13uC6zmXaOw9rWVVDhGv06XL4rkECgYAa\n" +
+                "iwKtrOytJOMJWu9mii1fCLY/CWth+gbGS/0WhBAvZRBBhrGyQgO++RTO4DHActVi\n" +
+                "Wz8dmp34Qx8dsu6Na8UoAj3Er0N1Vf/jF5Z05grC/enrYyMOGnqlNm2FlkElV7TF\n" +
+                "w5U2QLfQbzWlHhs4OgelUh9n740Ypr3YQIGMYunLEwKBgCLZw0PtvdpQ24vOv+ns\n" +
+                "O8pEoQyQq2qkRx1RCkXwOav5zyON+g7fKF6zpXqZe0GHfGzdrhEjPhNNwEN/80hP\n" +
+                "Ch31uW4NDVSpRwZjUsF4ecoqiqJPTAXKpX8UTo2W4APP7upRDrEt5u6yRfxjwm6t\n" +
+                "mGt7MZZknZI8T6GylRAA3tTg\n"+
+                "-----END PRIVATE KEY-----";
+        try {
+            outStr = RSAEncrypt.decrypt(str,privateKey);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Assertions.assertEquals("test",outStr);
+    }
 }
