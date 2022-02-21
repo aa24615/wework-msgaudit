@@ -270,7 +270,6 @@ public class Message {
                     String fileext = content.getString("fileext");
                     ext = fileext;
                 }
-
             }catch (Exception e){
                 System.out.println("获取失败:"+e.toString());
             }
