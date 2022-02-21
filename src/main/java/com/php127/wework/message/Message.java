@@ -121,12 +121,18 @@ public class Message {
                 JSONObject data = new JSONObject(item);
                 String encrypt_random_key = data.getString("encrypt_random_key");
                 String encrypt_chat_msg = data.getString("encrypt_chat_msg");
+                long publickey_ver = data.getLong("publickey_ver");
+                String msgid = data.getString("msgid");
+
                 long seq = data.getLong("seq");
 //                    System.out.println("密钥:"+encrypt_random_key);
 //                    System.out.println("密文:"+encrypt_chat_msg);
                 String message = this.decryptData(encrypt_random_key,encrypt_chat_msg);
                 System.out.println("消息内容:"+message);
-                if(this.saveMessage(seq,message)){
+                System.out.println("密钥版本:"+publickey_ver);
+                System.out.println("seq:"+seq);
+
+                if(this.saveMessage(msgid,seq,publickey_ver,message)){
                     if(this.seqs<seq){
                         this.seqs=seq;
                     }
@@ -145,11 +151,27 @@ public class Message {
 
 
     //保存消息
-    public boolean saveMessage(long seq,String message){
+    public boolean saveMessage(String msgid,long seq,long publickey_ver,String message){
 
         System.out.println("----------------------------------");
 
-        JSONObject json = new JSONObject(message);
+        JSONObject json;
+
+        try {
+            json = new JSONObject(message);
+        }catch (Exception e){
+
+            String sql = String.format("INSERT INTO %s " +
+                    "(msgid,seq,publickey_ver,text) " +
+                    "VALUES " +
+                    "(?,?,?,'解密失败')",this.tableName);
+
+                int res = DB.getJdbcTemplate().update(sql, msgid, seq, publickey_ver);
+                System.out.println("插入状态:" + res);
+
+            return true;
+        }
+
 
         String msgfrom = "";
         String roomid = "";
@@ -161,7 +183,6 @@ public class Message {
         String text = "";
         String ext = "";
 
-        String msgid = json.getString("msgid");
         String action = json.getString("action");
 
         try {
@@ -218,27 +239,33 @@ public class Message {
                 }catch (Exception e){
                     System.out.println("data获取失败");
                 }
-
+                //图片
                 if(msgtype.equals("image")){
                     ext = "png";
                 }
-
+                //视频
+                if(msgtype.equals("video")){
+                    ext = "mp4";
+                }
+                //语音
+                if(msgtype.equals("voice")){
+                    ext = "amr";
+                }
+                //语音通话
                 if(msgtype.equals("meeting_voice_call")){
                     ext = "mp4";
                 }
-
+                //表情
                 if(msgtype.equals("emotion")){
                     int type = content.getInt("type");
-                    if(type==1){
+                    if(type==1){ //动态表情
                         ext = "gif";
                     }
-
-                    if(type==2){
+                    if(type==2){ //静态表情
                         ext = "png";
                     }
-
                 }
-
+                //文件
                 if(msgtype.equals("file")){
                     String fileext = content.getString("fileext");
                     ext = fileext;
@@ -294,11 +321,11 @@ public class Message {
 
         if(DB.getJdbcTemplate().queryForObject(sql,Integer.class)==0){
             sql = String.format("INSERT INTO %s " +
-                    "(msgid,seq,`action`,msgfrom,tolist,roomid,msgtime,msgtype,text,sdkfield,msgdata,created,media_path) " +
+                    "(msgid,seq,`action`,msgfrom,tolist,roomid,msgtime,msgtype,text,sdkfield,msgdata,created,media_path,publickey_ver) " +
                     "VALUES " +
-                    "(?,?,?,?,?,?,?,?,?,?,?,?,?)",this.tableName);
+                    "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",this.tableName);
             try {
-                int res = DB.getJdbcTemplate().update(sql,msgid,seq,action,msgfrom,tolist,roomid,msgtime,msgtype,text,sdkfield,msgdata,created,media_path);
+                int res = DB.getJdbcTemplate().update(sql,msgid,seq,action,msgfrom,tolist,roomid,msgtime,msgtype,text,sdkfield,msgdata,created,media_path,publickey_ver);
                 System.out.println("插入状态:"+res);
                 if(res>=1){
 

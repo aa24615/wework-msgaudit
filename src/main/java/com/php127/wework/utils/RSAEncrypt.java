@@ -92,6 +92,8 @@ public class RSAEncrypt {
      *             解密过程中的异常信息
      */
     public static String decrypt(String str, String privateKey) throws Exception{
+        //去头尾
+        privateKey = privateKey.replaceAll("-----BEGIN PRIVATE KEY-----","").replaceAll("-----END PRIVATE KEY-----","");
         //64位解码加密后的字符串
         byte[] inputByte = Base64.decodeBase64(str.getBytes("UTF-8"));
         //base64编码的私钥

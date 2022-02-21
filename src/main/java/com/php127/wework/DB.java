@@ -24,9 +24,9 @@ public class DB {
         //地址:端口
         dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/test?useSSL=false&characterEncoding=utf-8&autoReconnect=true");
         //用户名
-        dataSource.setUsername("test123");
+        dataSource.setUsername("root");
         //密码
-        dataSource.setPassword("test123");
+        dataSource.setPassword("root");
         return dataSource;
     }
 
