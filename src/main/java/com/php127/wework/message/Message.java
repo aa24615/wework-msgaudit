@@ -249,32 +249,42 @@ public class Message {
                 }catch (Exception e){
                     System.out.println("data获取失败");
                 }
-
+                try {
+                    msgdata = content.toString();
+                }catch (Exception e){
+                    System.out.println("data获取失败");
+                }
+                //图片
                 if(msgtype.equals("image")){
                     ext = "png";
                 }
-
+                //视频
+                if(msgtype.equals("video")){
+                    ext = "mp4";
+                }
+                //语音
+                if(msgtype.equals("voice")){
+                    ext = "amr";
+                }
+                //语音通话
                 if(msgtype.equals("meeting_voice_call")){
                     ext = "mp4";
                 }
-
+                //表情
                 if(msgtype.equals("emotion")){
                     int type = content.getInt("type");
-                    if(type==1){
+                    if(type==1){ //动态表情
                         ext = "gif";
                     }
-
-                    if(type==2){
+                    if(type==2){ //静态表情
                         ext = "png";
                     }
-
                 }
-
+                //文件
                 if(msgtype.equals("file")){
                     String fileext = content.getString("fileext");
                     ext = fileext;
                 }
-
             }catch (Exception e){
                 System.out.println("获取失败:"+e.toString());
             }
