@@ -46,12 +46,14 @@
                 });
 
                 $.post('/login',res=>{
-                    console.log(res);
+                    if(res.code==1){
+                        setTimeout(function() {
+                            window.location.href = '/www/index.html';
+                        }, 1000);
+                    }else{
+                        layer.msg(res.msg,function (){});
+                    }
                 })
-
-                // setTimeout(function() {
-                //     window.location.href = 'index.html';
-                // }, 1000);
 
                 return false;
             });

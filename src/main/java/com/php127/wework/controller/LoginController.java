@@ -1,23 +1,35 @@
 package com.php127.wework.controller;
 
+import com.php127.wework.DB;
+import com.php127.wework.Response;
+import com.php127.wework.bean.Admin;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-@Controller
+@RestController
 @EnableAutoConfiguration
-public class LoginController {
 
-    @RequestMapping("/login")
-    public String login(Map<String,String> map){
-        return "login";
+public class LoginController extends BaseController {
+
+    @Autowired
+    private HttpServletRequest request;
+
+    @RequestMapping(value="login",method = RequestMethod.POST)
+    public Object loginPost(Map<String,String> map){
+
+        System.out.println(request.getScheme());
+
+        Admin admin = new Admin();
+
+        admin.setId(1);
+        admin.setUsername("2222");
+        admin.setPassword("2222");
+
+        return Response.success(admin);
     }
 
-    @RequestMapping(path="/login",method = RequestMethod.POST)
-    public String loginPost(Map<String,String> map){
-        return "login";
-    }
 }
