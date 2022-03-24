@@ -1,6 +1,5 @@
 package com.php127.wework.controller;
 
-import com.php127.wework.DB;
 import com.php127.wework.Response;
 import com.php127.wework.bean.Admin;
 import org.springframework.beans.factory.annotation.Autowired;

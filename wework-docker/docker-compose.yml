@@ -25,6 +25,21 @@ services:
     privileged: true
     networks:
       - webnet
+  nginx:
+    image: "nginx:1.14.0"
+    ports:
+      - "8081:8081"
+    restart: always
+    privileged: true
+    networks:
+      - webnet
+    volumes:
+      - "../src/main/resources/static/www/:/www/"
+      - "../src/main/resources/static/admin/:/www/admin/"
+      - "../src/main/resources/static/js/:/www/js/"
+      - "../src/main/resources/static/layui/:/www/layui/"
+      - "./nginx/vhost:/etc/nginx/conf.d"
+      - "./nginx/conf/nginx.conf:/etc/nginx/nginx.conf"
   wework:
 #    build: ./java
     image: daocloud.io/library/java

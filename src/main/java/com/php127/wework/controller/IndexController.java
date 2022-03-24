@@ -23,24 +23,5 @@ import java.util.Map;
 @EnableAutoConfiguration
 public class IndexController {
 
-    @RequestMapping("/")
-    public String index(Map<String,String> map){
-        return "index";
-    }
 
-    @RequestMapping("/index.html")
-    public String _index(Map<String,String> map){
-        return "index";
-    }
-
-
-    @Autowired
-    private HttpServletRequest request;
-
-    @RequestMapping("/*.html")
-    public String empty(Map<String,String> map){
-
-        map.put("name",request.getServletPath());
-        return "empty";
-    }
 }
