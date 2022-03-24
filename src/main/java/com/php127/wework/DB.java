@@ -17,10 +17,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 public class DB {
 
-    public static DriverManagerDataSource getInstance(){
+    public static DriverManagerDataSource getDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        //地址:端口
+        //jdbc:mysql://地址:端口/数据库名称
         dataSource.setUrl("jdbc:mysql://mysql:3306/test?useSSL=false&characterEncoding=utf-8&autoReconnect=true");
         //用户名
         dataSource.setUsername("root");
@@ -29,11 +29,11 @@ public class DB {
         return dataSource;
     }
 
-    public static JdbcTemplate getJdbcTemplate(){
+    public static JdbcTemplate getJdbcTemplate() {
 
         JdbcTemplate jdbcTemplate = null;
 
-        jdbcTemplate = new JdbcTemplate(getInstance());
+        jdbcTemplate = new JdbcTemplate(getDataSource());
 
         return jdbcTemplate;
     }

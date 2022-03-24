@@ -22,35 +22,35 @@ public class Threads extends Thread {
     }
 
     public void run() {
-        System.out.println("开始运行: " +  corpid );
+        System.out.println("开始运行: " + corpid);
         try {
-            while (true){
+            while (true) {
                 try {
-                    Message message = new Message(this.corpid,this.secret,this.prikey);
+                    Message message = new Message(this.corpid, this.secret, this.prikey);
                     message.getList();
-                    Thread.sleep( 5000) ;
-                }catch (InterruptedException e){
-                    System.out.println("异常: " +  e.getMessage() );
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    System.out.println("异常: " + e.getMessage());
                 }
             }
-        }catch (UnsatisfiedLinkError e){
+        } catch (UnsatisfiedLinkError e) {
 
             System.out.println(e.getMessage());
-            System.out.println("找不到动态库 WeWorkFinanceSdk_Java.so" );
-            System.out.println("请使用linux系统,并将动态库拷贝到系统" );
-        }catch (Exception e) {
-            System.out.println("异常线程: " +  corpid );
+            System.out.println("找不到动态库 WeWorkFinanceSdk_Java.so");
+            System.out.println("请使用linux系统,并将动态库拷贝到系统");
+        } catch (Exception e) {
+            System.out.println("异常线程: " + corpid);
             System.out.println(e.getMessage());
         }
 
-        System.out.println("结束线程: " +  corpid );
+        System.out.println("结束线程: " + corpid);
     }
 
-    public void start () {
-        System.out.println("开始线程: " +  this.corpid );
+    public void start() {
+        System.out.println("开始线程: " + this.corpid);
         if (thread == null) {
-            thread = new Thread (this);
-            thread.start ();
+            thread = new Thread(this);
+            thread.start();
         }
     }
 }

@@ -20,7 +20,7 @@ import java.io.*;
 public class Start {
 
 
-    public static void run(){
+    public static void run() {
 
 
         System.out.println("===============init===============");
@@ -31,7 +31,7 @@ public class Start {
 
         List<Map<String, Object>> list = DB.getJdbcTemplate().queryForList("SELECT * FROM corplist where status=1");
 
-        if(list.size()==0){
+        if (list.size() == 0) {
             System.out.println("没有企业可拉取");
             return;
         }
@@ -52,7 +52,7 @@ public class Start {
 
             //开启线程
             //开启线程
-            Threads thread = new Threads(corpid,secret,prikey);
+            Threads thread = new Threads(corpid, secret, prikey);
             thread.start();
         }
 
@@ -89,18 +89,17 @@ public class Start {
      * 创建聊天记录表.
      *
      * @return void
-     *
      * @author 读心印 <aa24615@qq.com>
      */
-    private static void createMessageTable(String corpid){
+    private static void createMessageTable(String corpid) {
 
-        String sql = "select count(*) from information_schema.tables where table_name = '"+"message_"+corpid+"' ";
-        int count = DB.getJdbcTemplate().queryForObject(sql,Integer.class);
-        System.out.println("是否创建聊天记录表["+corpid+"]:"+count);
+        String sql = "select count(*) from information_schema.tables where table_name = '" + "message_" + corpid + "' ";
+        int count = DB.getJdbcTemplate().queryForObject(sql, Integer.class);
+        System.out.println("是否创建聊天记录表[" + corpid + "]:" + count);
 
-        if(count==0){
+        if (count == 0) {
 
-            sql = "CREATE TABLE `message_"+corpid+"` (\n" +
+            sql = "CREATE TABLE `message_" + corpid + "` (\n" +
                     "  `id` int(11) NOT NULL AUTO_INCREMENT,\n" +
                     "  `msgid` varchar(64) NOT NULL COMMENT '消息ID',\n" +
                     "  `publickey_ver` tinyint(4) DEFAULT '1' COMMENT '密钥版本',\n" +
@@ -126,17 +125,17 @@ public class Start {
         }
     }
 
-    private static void createMsgFileDir(String corpid){
+    private static void createMsgFileDir(String corpid) {
 
         //创建根目录
         File file = new File("./msgfile/");
-        if(!file.exists()){
+        if (!file.exists()) {
             file.mkdir();
         }
 
         //创建企业目录
-        File msgfile =new File("./msgfile/"+corpid+"/");
-        if(!msgfile.exists()){
+        File msgfile = new File("./msgfile/" + corpid + "/");
+        if (!msgfile.exists()) {
             msgfile.mkdir();
         }
     }

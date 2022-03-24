@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="/layui/css/layui.css">
     <link rel="stylesheet" href="/admin/css/login.css">
     <script src="/layui/layui.js"></script>
+    <script src="/js/axios.min.js"></script>
+    <script src="/admin/js/http.js"></script>
 </head>
 
 <body id="login">
@@ -45,10 +47,10 @@
                     time: 0,
                 });
 
-                $.post('/login',res=>{
+                http.post('/login').then(res=>{
                     if(res.code==1){
                         setTimeout(function() {
-                            window.location.href = '/www/index.html';
+                            window.location.href = 'index.html';
                         }, 1000);
                     }else{
                         layer.msg(res.msg,function (){});

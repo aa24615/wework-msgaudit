@@ -1,34 +1,43 @@
 package com.php127.wework.controller;
 
+import com.php127.wework.DB;
 import com.php127.wework.Response;
-import com.php127.wework.bean.Admin;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import com.php127.wework.data.Admin;
+import com.php127.wework.utils.MD5Util
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
-
-@RestController
-@EnableAutoConfiguration
 
 public class LoginController extends BaseController {
 
-    @Autowired
-    private HttpServletRequest request;
 
-    @RequestMapping(value="login",method = RequestMethod.POST)
-    public Object loginPost(Map<String,String> map){
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    public Object loginPost(Map<String, String> map) {
 
-        System.out.println(request.getScheme());
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
-        Admin admin = new Admin();
+        String sql = String.format("SELECT * FROM wework_admin where username='%s'", username);
 
-        admin.setId(1);
-        admin.setUsername("2222");
-        admin.setPassword("2222");
+        try {
+            Map<String, Object> data = DB.getJdbcTemplate().queryForMap(sql);
 
-        return Response.success(admin);
+            password = MD5Util.md5(MD5Util.md5(password));
+            if (!data.get("password").toString().equals(password)) {
+                return Response.error("密码错误");
+            }
+
+            Admin admin = new Admin();
+            admin.setId(new Integer(data.get("id").toString()));
+            admin.setUsername(username);
+
+            return Response.success(admin);
+
+        } catch (Exception exception) {
+            return Response.error("用户名错误");
+        }
+
+
     }
 
 }

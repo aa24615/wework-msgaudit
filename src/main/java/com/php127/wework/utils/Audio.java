@@ -15,6 +15,7 @@ import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.EncoderException;
 import it.sauronsoftware.jave.EncodingAttributes;
 import it.sauronsoftware.jave.InputFormatException;
+
 import java.io.File;
 
 public class Audio {
@@ -32,8 +33,8 @@ public class Audio {
         try {
             encoder.encode(source, target, attrs);
             return true;
-        } catch (Exception e){
-            System.out.println("tomp3 error: "+e.getMessage());
+        } catch (Exception e) {
+            System.out.println("tomp3 error: " + e.getMessage());
             return false;
         }
     }

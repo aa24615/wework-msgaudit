@@ -10,6 +10,7 @@
 package com.php127.wework.utils;
 
 import org.apache.commons.codec.binary.Base64;
+
 import javax.crypto.Cipher;
 import java.security.KeyFactory;
 import java.security.interfaces.RSAPrivateKey;
@@ -27,12 +28,10 @@ public class RSAEncrypt {
      *
      * @param str
      * @param publicKey
-     *
      * @return String
-     *
      * @throws Exception
      */
-    public static String encrypt( String str, String publicKey ) throws Exception{
+    public static String encrypt(String str, String publicKey) throws Exception {
         //base64编码的公钥
         byte[] decoded = Base64.decodeBase64(publicKey);
         RSAPublicKey pubKey = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(decoded));
@@ -48,14 +47,12 @@ public class RSAEncrypt {
      *
      * @param str
      * @param privateKey
-     *
      * @return String
-     *
      * @throws Exception
      */
-    public static String decrypt(String str, String privateKey) throws Exception{
+    public static String decrypt(String str, String privateKey) throws Exception {
         //去头尾
-        privateKey = privateKey.replaceAll("-----BEGIN PRIVATE KEY-----","").replaceAll("-----END PRIVATE KEY-----","");
+        privateKey = privateKey.replaceAll("-----BEGIN PRIVATE KEY-----", "").replaceAll("-----END PRIVATE KEY-----", "");
         //64位解码加密后的字符串
         byte[] inputByte = Base64.decodeBase64(str.getBytes("UTF-8"));
         //base64编码的私钥

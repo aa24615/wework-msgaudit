@@ -30,22 +30,22 @@ public class Response {
         return data;
     }
 
-    public static Object error(String msg){
-        Response response =  new Response();
+    public static Object error(String msg) {
+        Response response = new Response();
         response.setCode(0);
         response.setMsg(msg);
         return response;
     }
 
-    public static Object error(String msg,int code){
-        Response response =  new Response();
+    public static Object error(String msg, int code) {
+        Response response = new Response();
         response.setCode(code);
         response.setMsg(msg);
         return response;
     }
 
-    public static Object success(Object data){
-        Response response =  new Response();
+    public static Object success(Object data) {
+        Response response = new Response();
         response.setCode(1);
         response.setMsg("ok");
         response.setData(data);

@@ -12,6 +12,8 @@
     <script src="/layui/layui.js"></script>
     <script src="/js/jquery-3.3.1.min.js"></script>
     <script src="/js/vue.min.js"></script>
+    <script src="/js/axios.min.js"></script>
+    <script src="/admin/js/http.js"></script>
     <style>
         .right h2{
             margin: 10px 0;
@@ -31,7 +33,7 @@
             <i class="layui-icon">&#xe715;</i>
             <ul>
                 <li v-for="vo in address">
-                    <a  v-text="vo.name" :href="vo.url" ></a> <span>/</span>
+                    <a v-text="vo.name" :href="vo.url"></a> <span>/</span>
                 </li>
             </ul>
         </div>
@@ -40,27 +42,31 @@
     <div class="main">
         <!--左栏-->
         <div class="left">
-            <ul class="cl" >
+            <ul class="cl">
                 <!--顶级分类-->
                 <li v-for="vo,index in menu" :class="{hidden:vo.hidden}">
                     <a href="javascript:;" :class="{active:vo.active}" @click="onActive(index)">
                         <i class="layui-icon" v-html="vo.icon"></i>
                         <span v-text="vo.name"></span>
-                        <i class="layui-icon arrow" v-show="vo.url.length==0">&#xe61a;</i> <i v-show="vo.active" class="layui-icon active">&#xe623;</i>
+                        <i class="layui-icon arrow" v-show="vo.url.length==0">&#xe61a;</i>
+                        <i v-show="vo.active" class="layui-icon active">&#xe623;</i>
                     </a>
                     <!--子级分类-->
                     <div v-for="vo2,index2 in vo.list">
-                        <a href="javascript:;" :class="{active:vo2.active}" @click="onActive(index,index2)" v-text="vo2.name"></a>
+                        <a :href="vo2.url" target="main" :class="{active:vo2.active}" v-text="vo2.name"></a>
                         <i v-show="vo2.active" class="layui-icon active">&#xe623;</i>
                     </div>
                 </li>
             </ul>
         </div>
+
         <!--右侧-->
-        <div class="right p20" th:replace="">
+        <div class="right">
+            <iframe src="./main.html" name="main" marginwidth="0" marginheight="0" frameborder="0" scrolling="auto" target="_self"></iframe>
         </div>
     </div>
 </div>
+
 <script src="/admin/js/config.js"></script>
 <script src="/admin/js/script.js"></script>
 </body>

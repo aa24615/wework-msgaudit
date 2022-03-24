@@ -1,16 +1,16 @@
-package com.php127.wework.bean;
+package com.php127.wework.data;
 
 public class Admin {
     private int id;
     private String username;
-    private String password;
+    private int state;
 
-    public String getPassword() {
-        return password;
+    public void setState(int state) {
+        this.state = state;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public int getState() {
+        return state;
     }
 
     public String getUsername() {
