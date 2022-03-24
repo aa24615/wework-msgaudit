@@ -4,10 +4,14 @@ import com.php127.wework.DB;
 import com.php127.wework.Response;
 import com.php127.wework.data.Admin;
 import com.php127.wework.utils.MD5Util;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+
+@RestController;
+@EnableAutoConfiguration
 public class LoginController extends BaseController {
 
 

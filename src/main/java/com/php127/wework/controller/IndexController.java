@@ -11,10 +11,10 @@
 package com.php127.wework.controller;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+@RestController;
 @EnableAutoConfiguration
 public class IndexController extends BaseController {
 
