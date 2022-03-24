@@ -3,7 +3,7 @@ package com.php127.wework.controller;
 import com.php127.wework.DB;
 import com.php127.wework.Response;
 import com.php127.wework.data.Admin;
-import com.php127.wework.utils.MD5Util
+import com.php127.wework.utils.MD5Util;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -11,7 +11,7 @@ import java.util.Map;
 public class LoginController extends BaseController {
 
 
-    @RequestMapping(value = "login", method = RequestMethod.POST)
+    @PostMapping(value = "login")
     public Object loginPost(Map<String, String> map) {
 
         String username = request.getParameter("username");
