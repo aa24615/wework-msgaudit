@@ -107,16 +107,41 @@ java -jar target/wework-msgaudit-2.0.jar
 ```
 
 
-### 使用docker运行
+### 使用docker
 
-docker-compose.xml `wework-docker/docker-compose.xml` 详细配置说明 [docker-compose](https://www.runoob.com/docker/docker-compose.html)
+docker-compose.xml `wework-docker/docker-compose.xml`   
+详细配置说明 [docker-compose](https://www.runoob.com/docker/docker-compose.html)
 
-进入 `wework-docker` 目录
+打包并启动所有docker服务
+```shell
+sh run.sh
+```
+
+或 进入 `wework-docker` 目录
 
 启动
 ```shell
 docker-compose up -d
 ```
+
+启动后自动创建数据表 数据库
+
+前端页面 挂载 到 nginx 容器 `/www` 目录中 域名为 `wework.php127.com`
+后端服务 使用nginx 代理 域名为 `api.wework.php127.com`
+
+
+
+**docker清单**
+
+|镜像|版本|
+|---|---|
+|java|1.8|
+|mysql|5.7|
+|redis|6.2.5|
+|nginx|1.14.0|
+
+
+
 
 
 ###  常见问题
