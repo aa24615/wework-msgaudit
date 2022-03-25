@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>wework-msgaudit</title>
+    <meta name="keywords" content="会话内容存档">
+    <meta name="description" content="实时拉取企业微信聊天记录java版SDK">
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/admin/css/style.css">
+    <script src="/layui/layui.js"></script>
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/vue.min.js"></script>
+    <script src="/js/axios.min.js"></script>
+    <script src="/admin/js/http.js"></script>
+    <style>
+        .right h2{
+            margin: 10px 0;
+        }
+        .right li{
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <!--顶栏-->
+    <header>
+        <h1 v-text="webname"></h1>
+        <div class="breadcrumb">
+            <i class="layui-icon">&#xe715;</i>
+            <ul>
+                <li v-for="vo in address">
+                    <a v-text="vo.name" :href="vo.url"></a> <span>/</span>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="main">
+        <!--左栏-->
+        <div class="left">
+            <ul class="cl">
+                <!--顶级分类-->
+                <li v-for="vo,index in menu" :class="{hidden:vo.hidden}">
+                    <a href="javascript:;" :class="{active:vo.active}" @click="onActive(index)">
+                        <i class="layui-icon" v-html="vo.icon"></i>
+                        <span v-text="vo.name"></span>
+                        <i class="layui-icon arrow" v-show="vo.url.length==0">&#xe61a;</i>
+                        <i v-show="vo.active" class="layui-icon active">&#xe623;</i>
+                    </a>
+                    <!--子级分类-->
+                    <div v-for="vo2,index2 in vo.list">
+                        <a :href="vo2.url" target="main" :class="{active:vo2.active}" v-text="vo2.name"></a>
+                        <i v-show="vo2.active" class="layui-icon active">&#xe623;</i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!--右侧-->
+        <div class="right">
+            <iframe src="./main.html" name="main" marginwidth="0" marginheight="0" frameborder="0" scrolling="auto" target="_self"></iframe>
+        </div>
+    </div>
+</div>
+
+<script src="/admin/js/config.js"></script>
+<script src="/admin/js/script.js"></script>
+</body>
+</html>

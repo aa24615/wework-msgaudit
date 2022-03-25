@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/admin/css/style.css">
+</head>
+<body class="p20">
+
+
+
+
+<div class="layui-row">
+    <div class="layui-col-lg8">
+        <a href="/corp/create.html" class="layui-btn">添加企业</a>
+    </div>
+
+    <div class="layui-col-lg4" style="text-align: right">
+
+        <div class="layui-input-inline" style="width: 300px">
+            <input type="text" name="k" value="" placeholder="企业名称/企业id" class="layui-input key">
+        </div>
+        <button type="button" class="layui-btn sou">搜索</button>
+    </div>
+</div>
+
+<table class="layui-table layui-form">
+
+    <thead>
+    <tr>
+        <th><a href="?/admin/user/index/order/uid.html">ID</a></th>
+        <th>企业名称</th>
+        <th>企业ID</th>
+        <th>Secret</th>
+        <th>拉取数</th>
+        <th>拉取超时</th>
+        <th><a >状态</a></th>
+        <th><a >创建时间</a></th>
+        <th><a >密钥</a></th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="id36567">
+        <td>36567</td>
+        <td>15912345678</td>
+        <td>YY187919</td>
+        <td></td>
+        <td></td>
+        <td>YY187919@flash127.com</td>
+        <td>2019-04-01 11:44:20</td>
+        <td>7</td>
+        <td>
+            <input type="checkbox" lay-filter="state" data-uid="36567" lay-text="正常|封禁" name="switch" checked="" lay-skin="switch">
+        </td>
+
+        <td>
+            <a href="?/admin/user/update/uid/36567.html">修改</a>
+            <a href="?/admin/user/update/uid/36567.html">删除</a>
+
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+
+<div class="page">
+    <ul class="pagination">
+        <li class="disabled"><span>«</span></li>
+        <li class="active"><span>1</span></li>
+        <li><a href="?/admin/user/index.html?page=2">2</a></li>
+        <li><a href="?/admin/user/index.html?page=3">3</a></li>
+        <li><a href="?/admin/user/index.html?page=4">4</a></li>
+        <li><a href="?/admin/user/index.html?page=5">5</a></li>
+        <li><a href="?/admin/user/index.html?page=6">6</a></li>
+        <li><a href="?/admin/user/index.html?page=7">7</a></li>
+        <li><a href="?/admin/user/index.html?page=8">8</a></li>
+        <li class="disabled"><span>...</span></li>
+        <li><a href="?/admin/user/index.html?page=109">109</a></li>
+        <li><a href="?/admin/user/index.html?page=110">110</a></li>
+        <li><a href="?/admin/user/index.html?page=2">»</a></li>
+    </ul>
+</div>
+
+</body>
+</html>
