@@ -30,6 +30,13 @@ public class Response {
         return data;
     }
 
+    public static Object error() {
+        Response response = new Response();
+        response.setCode(0);
+        response.setMsg("error");
+        return response;
+    }
+
     public static Object error(String msg) {
         Response response = new Response();
         response.setCode(0);
@@ -41,6 +48,13 @@ public class Response {
         Response response = new Response();
         response.setCode(code);
         response.setMsg(msg);
+        return response;
+    }
+
+    public static Object success() {
+        Response response = new Response();
+        response.setCode(1);
+        response.setMsg("ok");
         return response;
     }
 

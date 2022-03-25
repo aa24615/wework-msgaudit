@@ -14,7 +14,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@RestController;
+@RestController
 @EnableAutoConfiguration
 public class IndexController extends BaseController {
 
