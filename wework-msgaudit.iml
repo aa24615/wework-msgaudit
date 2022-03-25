@@ -114,6 +114,15 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: com.tencent.wework:wework-sdk:1.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/wework-sdk/target/wework-sdk-1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.13.2" level="project" />
   </component>
 </module>

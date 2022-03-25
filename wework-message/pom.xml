@@ -8,4 +8,29 @@
     <artifactId>wework-message</artifactId>
     <version>3.0</version>
     <packaging>jar</packaging>
+
+
+    <dependencies>
+
+        <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tencent.wework</groupId>
+            <artifactId>wework-sdk</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/wework-sdk/target/wework-sdk-1.0.jar</systemPath>
+        </dependency>
+    </dependencies>
 </project>
