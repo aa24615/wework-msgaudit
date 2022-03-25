@@ -46,22 +46,15 @@ public class CorpController extends BaseController {
         String limits = request.getParameter("limits");
         String timeout = request.getParameter("timeout");
 
-        String sql_count = String.format("SELECT count(*) FROM wework_corplist where corpid='%s'",corpid);
+        CorpService corp = new CorpService();
 
-        if(DB.getJdbcTemplate().queryForObject(sql_count,Integer.class)>0){
-            return Response.error("企业已存在");
-        }
+        boolean res = corp.create(corpid,secret,corpname,limits,timeout);
 
-        String sql = "INSERT INTO `wework_corplist`" +
-                "(`corpid`, `secret`, `corpname`, `limits`, `timeout`)" +
-                " VALUES (?,?,?,?,?)";
-
-        int res =  DB.getJdbcTemplate().update(sql, corpid, secret, corpname, limits, timeout);
-        if(res>0){
+        if(res){
             return Response.success();
         }
 
-        return Response.error();
+        return Response.error(corp.getErrorMessage());
     }
 
     @PostMapping("/update")
