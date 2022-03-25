@@ -3,6 +3,7 @@ package com.php127.wework.controller;
 
 import com.php127.wework.DB;
 import com.php127.wework.Response;
+import com.php127.wework.service.CorpService;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,24 +23,19 @@ public class CorpController extends BaseController {
     public Object getList() {
 
         String page = request.getParameter("page");
+        String limit = request.getParameter("limit");
+
         if (page == null) {
             page = "1";
         }
-        int page1 = new Integer(page);
-        int n1 = page1 * 10 - 10;
-        int n2 = page1 * 10;
 
-        String sql = String.format("SELECT * FROM wework_corplist LIMIT %s,%s", n1, n2);
-        String sql2 = String.format("SELECT count(*) FROM wework_corplist ");
+        if (limit == null) {
+            limit = "10";
+        }
 
+        CorpService corp = new CorpService();
 
-        List<Map<String, Object>> list = DB.getJdbcTemplate().queryForList(sql);
-        int count = DB.getJdbcTemplate().queryForObject(sql2, Integer.class);
-
-        Map<String, Object> data = new HashMap<>();
-        data.put("list", list);
-        data.put("count", count);
-        return Response.success(data);
+        return Response.success(corp.getList(page,limit));
     }
 
     @PostMapping("/create")
@@ -50,10 +46,15 @@ public class CorpController extends BaseController {
         String limits = request.getParameter("limits");
         String timeout = request.getParameter("timeout");
 
+        String sql_count = String.format("SELECT count(*) FROM wework_corplist where corpid='%s'",corpid);
+
+        if(DB.getJdbcTemplate().queryForObject(sql_count,Integer.class)>0){
+            return Response.error("企业已存在");
+        }
+
         String sql = "INSERT INTO `wework_corplist`" +
                 "(`corpid`, `secret`, `corpname`, `limits`, `timeout`)" +
                 " VALUES (?,?,?,?,?)";
-
 
         int res =  DB.getJdbcTemplate().update(sql, corpid, secret, corpname, limits, timeout);
         if(res>0){
@@ -65,6 +66,18 @@ public class CorpController extends BaseController {
 
     @PostMapping("/update")
     public Object update() {
+
+        String corpid = request.getParameter("corpid");
+        String secret = request.getParameter("secret");
+        String corpname = request.getParameter("corpname");
+        String limits = request.getParameter("limits");
+        String timeout = request.getParameter("timeout");
+
+        String sql_count = String.format("SELECT count(*) FROM wework_corplist where corpid='%s'",corpid);
+        if(DB.getJdbcTemplate().queryForObject(sql_count,Integer.class)==0){
+            return Response.error("企业不存在");
+        }
+
 
         return Response.success(this);
     }
