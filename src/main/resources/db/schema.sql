@@ -26,3 +26,18 @@ CREATE TABLE IF NOT EXISTS `wework_admin` (
     PRIMARY KEY (`id`),
     KEY `username` (`username`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET = utf8;
+
+
+
+-- ----------------------------
+-- Table structure for wework_prikey
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `wework_prikey` (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主健',
+  `corpid` VARCHAR ( 18 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '企业id',
+  `version` tinyint(1) DEFAULT '1' COMMENT '密钥版本号',
+  `prikey` varchar(2048) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密文的私有密钥',
+  `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `corpid` (`corpid`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET = utf8;
