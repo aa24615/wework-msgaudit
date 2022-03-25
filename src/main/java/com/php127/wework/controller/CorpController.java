@@ -35,7 +35,7 @@ public class CorpController extends BaseController {
 
         CorpService corp = new CorpService();
 
-        return Response.success(corp.getList(page,limit));
+        return Response.success(corp.getList(page, limit));
     }
 
     @PostMapping("/create")
@@ -48,9 +48,9 @@ public class CorpController extends BaseController {
 
         CorpService corp = new CorpService();
 
-        boolean res = corp.create(corpid,secret,corpname,limits,timeout);
+        boolean res = corp.create(corpid, secret, corpname, limits, timeout);
 
-        if(res){
+        if (res) {
             return Response.success();
         }
 
@@ -60,24 +60,54 @@ public class CorpController extends BaseController {
     @PostMapping("/update")
     public Object update() {
 
+        String id = request.getParameter("id");
         String corpid = request.getParameter("corpid");
         String secret = request.getParameter("secret");
         String corpname = request.getParameter("corpname");
         String limits = request.getParameter("limits");
         String timeout = request.getParameter("timeout");
 
-        String sql_count = String.format("SELECT count(*) FROM wework_corplist where corpid='%s'",corpid);
-        if(DB.getJdbcTemplate().queryForObject(sql_count,Integer.class)==0){
-            return Response.error("企业不存在");
+        CorpService corp = new CorpService();
+
+        boolean res = corp.update(id, corpid, secret, corpname, limits, timeout);
+
+        if (res) {
+            return Response.success();
         }
 
+        return Response.error(corp.getErrorMessage());
+    }
 
-        return Response.success(this);
+    @PostMapping("/update/status")
+    public Object updateStatus() {
+
+        String id = request.getParameter("id");
+        String status = request.getParameter("status");
+
+        CorpService corp = new CorpService();
+
+        boolean res = corp.updateStatus(id, status);
+
+        if (res) {
+            return Response.success();
+        }
+
+        return Response.error(corp.getErrorMessage());
     }
 
     @PostMapping("/delete")
     public Object delete() {
 
-        return Response.success(this);
+        String id = request.getParameter("id");
+
+        CorpService corp = new CorpService();
+
+        boolean res = corp.delete(id);
+
+        if (res) {
+            return Response.success();
+        }
+
+        return Response.error();
     }
 }
