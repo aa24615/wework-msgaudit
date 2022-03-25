@@ -1,18 +1,13 @@
 package com.php127.wework.controller;
 
 
-import com.php127.wework.DB;
 import com.php127.wework.Response;
 import com.php127.wework.service.CorpService;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sun.rmi.server.Activation$ActivationSystemImpl_Stub;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @EnableAutoConfiguration

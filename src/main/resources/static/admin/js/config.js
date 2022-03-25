@@ -12,11 +12,11 @@ const menu = [{
     "hidden": false,
     "list": [{
         "name": "企业列表",
-        "url": "pages_component.html",
+        "url": "corp/list.html",
     }, {
         "name": "添加企业",
-        "url": "pages_model.html"
-    },]
+        "url": "corp/create.html"
+    }]
 }, {
     "name": "会话存档",
     "icon": "&#xe63a;",
@@ -24,10 +24,10 @@ const menu = [{
     "hidden": false,
     "list": [{
         "name": "员工维度",
-        "url": "user_index.html"
+        "url": "404.html"
     }, {
         "name": "客户维度",
-        "url": "user_add.html"
+        "url": "404.html"
     }]
 },
     {
@@ -37,10 +37,10 @@ const menu = [{
         "hidden": false,
         "list": [{
             "name": "设置规则",
-            "url": "user_index.html"
+            "url": "404.html"
         }, {
             "name": "违规记录",
-            "url": "user_add.html"
+            "url": "404.html"
         }]
     }
     ];
