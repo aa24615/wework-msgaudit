@@ -9,14 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @EnableAutoConfiguration
 @RequestMapping(value = "/prikey")
-public class PrikeyController extends BaseController{
+public class PrikeyController extends BaseController {
 
 
     @PostMapping("/list")
-    public Object getList(){
+    public Object getList() {
 
         String id = request.getParameter("id");
-
 
 
         return Response.success();

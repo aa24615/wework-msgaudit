@@ -109,7 +109,7 @@ public class Start {
                     "  `msgtype` varchar(32) DEFAULT '' COMMENT '消息类型',\n" +
                     "  `msgtime` bigint(13) DEFAULT 0 COMMENT '消息发送时间戳，utc时间，ms单位',\n" +
                     "  `text` varchar(4000) DEFAULT '' COMMENT '文本消息',\n" +
-                    "  `sdkfield` varchar(2000) DEFAULT '' COMMENT '附件ID',\n" +
+                    "  `sdkfileid` varchar(2000) DEFAULT '' COMMENT '附件ID',\n" +
                     "  `msgdata` text COMMENT '消息数据 json格式',\n" +
                     "  `status` int(11) DEFAULT '1' COMMENT '1：未加载媒体;\\r\\n2：正在加载媒体；\\r\\n3：媒体加载完成；\\r\\n4：媒体加载失败',\n" +
                     "  `media_code` int(11) DEFAULT 0 COMMENT '媒体错误码',\n" +

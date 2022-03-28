@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test;
 public class Base64CodedTests {
 
     @Test
-    public void testDecode(){
-        Assertions.assertEquals("test",Base64Coded.decode("dGVzdA=="));
+    public void testDecode() {
+        Assertions.assertEquals("test", Base64Coded.decode("dGVzdA=="));
     }
 
     @Test
-    public void testEncode(){
-        Assertions.assertEquals("dGVzdA==",Base64Coded.encode("test"));
+    public void testEncode() {
+        Assertions.assertEquals("dGVzdA==", Base64Coded.encode("test"));
     }
 }

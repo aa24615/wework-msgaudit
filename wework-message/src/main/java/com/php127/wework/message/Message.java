@@ -15,7 +15,7 @@ import com.php127.wework.utils.RSAEncrypt;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -23,27 +23,61 @@ import java.io.*;
 
 public class Message {
 
-    public String prikey = null;
-    public String corpid = null;
-    public long seqs = 0;
-    public long sdk;
+    protected String prikey = null;
+    protected String corpid = null;
+    protected String proxy = "";
+    protected String passwd = "";
+    protected long seq = 0;
+    protected long timeout = 60;
+    protected long sdk;
 
-    public String tableName = null;
+    protected void setProxy(String proxy) {
+        this.proxy = proxy;
+    }
 
-    public Message(String corpid, String secret, String prikey) {
+    protected void setPasswd(String passwd) {
+        this.passwd = passwd;
+    }
 
-        this.sdk = Finance.NewSdk();
+    protected void setSdk(long sdk) {
+        this.sdk = sdk;
+    }
 
-        this.corpid = corpid;
-        this.tableName = "message_" + this.corpid;
-        int state = Finance.Init(sdk, corpid, secret);
-        System.out.println("状态:" + state);
+    protected void setPrikey(String prikey) {
         this.prikey = prikey;
     }
 
+    protected void setCorpid(String corpid) {
+        this.corpid = corpid;
+    }
+
+    protected void setTimeout(long timeout) {
+        this.timeout = timeout;
+    }
+
+
+    public Message(String corpid, String secret, String prikey, String proxy, String passwd, long timeout) {
+        this.sdk = Finance.NewSdk();
+
+        this.setCorpid(corpid);
+        this.setPasswd(passwd);
+        this.setProxy(proxy);
+        this.setTimeout(timeout);
+        this.setPrikey(prikey);
+
+        int state = Finance.Init(this.sdk, corpid, secret);
+
+        if (state != 0) {
+            try {
+                throw new Exception("初始化失败");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     //解密
-    public String decryptData(String encrypt_random_key, String encrypt_msg) {
+    protected String decryptData(String encrypt_random_key, String encrypt_msg) {
 
         try {
 
@@ -67,130 +101,83 @@ public class Message {
         }
     }
 
-    public long getSeq() {
-
-        if (this.seqs > 0) {
-            System.out.println("大于0");
-            return this.seqs;
-        }
-
-        String sql = String.format("SELECT count(*) FROM %s", this.tableName);
-
-        int count = DB.getJdbcTemplate().queryForObject(sql, Integer.class);
-        if (count > 0) {
-            sql = String.format("SELECT seq FROM %s order by seq desc LIMIT 1", this.tableName);
-            long seq = DB.getJdbcTemplate().queryForObject(sql, Integer.class);
-            System.out.println("初始seq:" + seq);
-            this.seqs = seq;
-            return seq;
-        }
-
-        return 0;
-    }
-
     //获取列表
-    public void getList() throws Exception {
+    public Object[] getList(long seq, int limit) throws Exception {
 
 
-        System.out.println("======================================");
-
-
-        long seqs = this.getSeq();
-        int limit = 1000;
         long slice = Finance.NewSlice();
-        System.out.println("起始数:" + seqs);
-        int ret = Finance.GetChatData(this.sdk, seqs, limit, "", "", 100, slice);
+        int ret = Finance.GetChatData(this.sdk, seq, limit, this.proxy, this.passwd, this.timeout, slice);
         if (ret != 0) {
-            System.out.println("失败:" + ret);
-            return;
+            throw new Exception("获取失败");
         }
 
         String json = Finance.GetContentFromSlice(slice);
-        JSONObject jo = new JSONObject(json);
+        JSONObject data = new JSONObject(json);
 
-        String errmsg = jo.getString("errmsg");
-        int errcode = jo.getInt("errcode");
+        String errmsg = data.getString("errmsg");
+        int errcode = data.getInt("errcode");
 
-//            System.out.println("原始:"+json);
 
-        if (errcode == 0) {
-            System.out.println("获取成功:" + errmsg);
-            JSONArray chatdata = jo.getJSONArray("chatdata");
-            System.out.println("消息数:" + chatdata.length());
-            for (int i = 0; i < chatdata.length(); i++) {
-                String item = chatdata.get(i).toString();
-                JSONObject data = new JSONObject(item);
-                String encrypt_random_key = data.getString("encrypt_random_key");
-                String encrypt_chat_msg = data.getString("encrypt_chat_msg");
-                long publickey_ver = data.getLong("publickey_ver");
-                String msgid = data.getString("msgid");
-
-                long seq = data.getLong("seq");
-//                    System.out.println("密钥:"+encrypt_random_key);
-//                    System.out.println("密文:"+encrypt_chat_msg);
-                String message = this.decryptData(encrypt_random_key, encrypt_chat_msg);
-                System.out.println("消息内容:" + message);
-                System.out.println("密钥版本:" + publickey_ver);
-                System.out.println("seq:" + seq);
-
-                if (this.saveMessage(msgid, seq, publickey_ver, message)) {
-                    if (this.seqs < seq) {
-                        this.seqs = seq;
-                    }
-                }
-            }
-        } else {
+        if (errcode != 0) {
             System.out.println("获取失败:" + this.corpid);
             System.out.println("errcode:" + errcode + ":" + errmsg);
             throw new Exception("获取失败");
+
+        }
+
+
+        System.out.println("获取成功:" + errmsg);
+        JSONArray chatdata = data.getJSONArray("chatdata");
+
+        System.out.println("消息数:" + chatdata.length());
+
+
+        Object[] list = new Object[chatdata.length()];
+
+        for (int i = 0; i < chatdata.length(); i++) {
+
+            String items = chatdata.get(i).toString();
+            JSONObject item = new JSONObject(items);
+            String encrypt_random_key = item.getString("encrypt_random_key");
+            String encrypt_chat_msg = item.getString("encrypt_chat_msg");
+            long publickey_ver = item.getLong("publickey_ver");
+            String msgid = item.getString("msgid");
+
+            String messageData = this.decryptData(encrypt_random_key, encrypt_chat_msg);
+
+            list[i] = this.getMessage(msgid, seq, publickey_ver, messageData);
         }
 
         //关闭
         Finance.FreeSlice(slice);
 
+        return list;
     }
 
-
     //保存消息
-    public boolean saveMessage(String msgid, long seq, long publickey_ver, String message) {
+    public Object getMessage(String msgid, long seq, long publickey_ver, String message) {
 
-        System.out.println("----------------------------------");
 
         JSONObject json;
+
+        Data data = new Data();
+
+        data.setMsgid(msgid);
+        data.setSeq(seq);
 
         try {
             json = new JSONObject(message);
         } catch (Exception e) {
-
-            String sql = String.format("INSERT INTO %s " +
-                    "(msgid,seq,publickey_ver,text) " +
-                    "VALUES " +
-                    "(?,?,?,'解密失败')", this.tableName);
-
-            int res = DB.getJdbcTemplate().update(sql, msgid, seq, publickey_ver);
-            System.out.println("插入状态:" + res);
-
-            return true;
+            return data;
         }
 
-
-        String msgfrom = "";
-        String roomid = "";
-        String msgtype = "";
-        String msgdata = "";
-        long msgtime = 0;
-        String tolist = "";
-        String sdkfield = "";
-        String text = "";
-        String ext = "";
-        String action = "";
-
         try {
-            action = json.getString("action");
+            data.setAction(json.getString("action"));
         } catch (Exception ignored) {
 
         }
 
+        long msgtime = 0;
         try {
             msgtime = json.getLong("msgtime");
         } catch (Exception e) {
@@ -205,56 +192,79 @@ public class Message {
             msgtime = msgtime * 1000;
         }
 
+        data.setMsgtime(msgtime);
+
+
         try {
-            msgfrom = json.getString("from");
+            data.setMsgfrom(json.getString("from"));
         } catch (Exception ignored) {
 
         }
 
         try {
-            roomid = json.getString("roomid");
+            data.setRoomid(json.getString("roomid"));
         } catch (Exception ignored) {
 
         }
+
+        //接收人 [user1,user2...]
+        try {
+            JSONArray tolistList = json.getJSONArray("tolist");
+            int len = tolistList.length();
+            String[] tolistArray = new String[len];
+            for (int i = 0; i < len; i++) {
+                tolistArray[i] = tolistList.get(i).toString();
+            }
+            String tolist = "";
+
+            tolist = StringUtils.join(tolistArray, ",");
+            data.setTolist(tolist);
+        } catch (Exception e) {
+            //System.out.println("失败:"+e.getMessage());
+        }
+
+        String media_path = "";
+
+
+        String sdkfileid = this.getSdkfileid(json);
+
+        data.setSdkfileid(sdkfileid);
+
+        data.setMsgdata(this.getMsgdata(json));
+
+        data.setMsgtype(this.getMsgType(json));
+
+        data.setText(this.getText(json));
+
+        if (!sdkfileid.equals("")) {
+
+            String ext = this.getExt(json);
+
+            media_path = "./msgfile/" + this.corpid + "/" + seq + "." + ext;
+
+            this.downMedia(sdkfileid, media_path, );
+        }
+
+        data.setMediaPath(media_path);
+
+        return data;
+    }
+
+
+    protected String getExt(JSONObject data) {
+        String ext = "";
+        String msgtype = "";
 
         try {
-            msgtype = json.getString("msgtype");
+            msgtype = data.getString("msgtype");
         } catch (Exception ignored) {
 
         }
-
 
         if (!msgtype.equals("")) {
             try {
-                JSONObject content;
-                if (msgtype.equals("docmsg")) {
-                    content = json.getJSONObject("doc");
-                } else if (msgtype.equals("external_redpacket")) {
-                    content = json.getJSONObject("redpacket");
-                } else {
-                    content = json.getJSONObject(msgtype);
-                }
+                JSONObject content = this.getContent(data);
 
-                if (msgtype.equals("text")) {
-                    text = content.getString("content");
-                }
-
-                try {
-                    sdkfield = content.getString("sdkfileid");
-                } catch (Exception e) {
-                    System.out.println("sdkfield获取失败");
-                }
-
-                try {
-                    msgdata = content.toString();
-                } catch (Exception e) {
-                    System.out.println("data获取失败");
-                }
-                try {
-                    msgdata = content.toString();
-                } catch (Exception e) {
-                    System.out.println("data获取失败");
-                }
                 //图片
                 if (msgtype.equals("image")) {
                     ext = "png";
@@ -273,6 +283,7 @@ public class Message {
                 }
                 //表情
                 if (msgtype.equals("emotion")) {
+
                     int type = content.getInt("type");
                     if (type == 1) { //动态表情
                         ext = "gif";
@@ -283,123 +294,115 @@ public class Message {
                 }
                 //文件
                 if (msgtype.equals("file")) {
-                    String fileext = content.getString("fileext");
-                    ext = fileext;
+                    ext = content.getString("fileext");
                 }
-            } catch (Exception e) {
-                System.out.println("获取失败:" + e.toString());
+            } catch (Exception ignored) {
             }
 
         }
 
-        //接收人 [user1,user2...]
-        try {
-            JSONArray tolistList = json.getJSONArray("tolist");
-            int len = tolistList.length();
-            String[] tolistArray = new String[len];
-            for (int i = 0; i < len; i++) {
-                tolistArray[i] = tolistList.get(i).toString();
-            }
-            tolist = StringUtils.arrayToCommaDelimitedString(tolistArray);
-        } catch (Exception e) {
-            //System.out.println("失败:"+e.getMessage());
-        }
+        return ext;
+    }
 
 
-        System.out.println("seq:" + seq);
-//        System.out.println("msgid:"+msgid);
-//        System.out.println("action:"+action);
-//        System.out.println("from:"+from);
-//        System.out.println("tolist:"+tolist);
-//        System.out.println("roomid:"+roomid);
-//        System.out.println("msgtime:"+msgtime);
-//        System.out.println("msgtype:"+msgtype);
-//        System.out.println("text:"+text);
-//        System.out.println("sdkfileid:"+sdkfileid);
-        System.out.println("data:" + msgdata);
-//        System.out.println("msgdata:"+Base64Coded.encode(data));
+    protected JSONObject getContent(JSONObject data) {
 
+        String msgtype = this.getMsgType(data);
+        JSONObject content;
 
-        String media_path = "";
-
-        if (!sdkfield.equals("")) {
-            media_path = "/msgfile/" + this.corpid + "/" + seq + "." + ext;
-        }
-
-        Date Now = new Date();
-        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String created = ft.format(Now);
-
-        //入库啦
-        String sql;
-        sql = String.format("SELECT count(*) FROM %s WHERE msgid='%s'", this.tableName, msgid);
-
-        if (DB.getJdbcTemplate().queryForObject(sql, Integer.class) == 0) {
-            sql = String.format("INSERT INTO %s " +
-                    "(msgid,seq,`action`,msgfrom,tolist,roomid,msgtime,msgtype,text,sdkfield,msgdata,created,media_path,publickey_ver) " +
-                    "VALUES " +
-                    "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)", this.tableName);
-            try {
-                int res = DB.getJdbcTemplate().update(sql, msgid, seq, action, msgfrom, tolist, roomid, msgtime, msgtype, text, sdkfield, msgdata, created, media_path, publickey_ver);
-                System.out.println("插入状态:" + res);
-                if (res >= 1) {
-
-                    if (!sdkfield.equals("")) {
-                        this.downMedia(sdkfield, media_path, ext);
-                    }
-                    return true;
-                }
-                return false;
-            } catch (Exception e) {
-                System.out.println("插入失败:" + e.getMessage());
-                return false;
-            }
-
+        if (msgtype.equals("docmsg")) {
+            content = data.getJSONObject("doc");
+        } else if (msgtype.equals("external_redpacket")) {
+            content = data.getJSONObject("redpacket");
         } else {
-            System.out.println("已存在:" + msgid);
-            return true;
+            content = data.getJSONObject(msgtype);
         }
+
+        return content;
+    }
+
+    protected String getMsgType(JSONObject data) {
+
+        String msgtype = "";
+
+        try {
+            msgtype = data.getString("msgtype");
+        } catch (Exception ignored) {
+
+        }
+
+        return msgtype;
+    }
+
+    protected String getText(JSONObject data) {
+
+        JSONObject content = this.getContent(data);
+        String msgtype = this.getMsgType(data);
+
+        String text = "";
+
+        if (msgtype.equals("text")) {
+            text = content.getString("content");
+        }
+
+        return text;
+
+    }
+
+    protected String getSdkfileid(JSONObject data) {
+        JSONObject content = this.getContent(data);
+
+        String sdkfileid = "";
+
+        try {
+            sdkfileid = content.getString("sdkfileid");
+        } catch (Exception ignored) {
+
+        }
+
+        return sdkfileid;
 
     }
 
 
-    public void downMedia(String sdkField, String media_path, String ext) {
-        System.out.println("下载附件");
+    public String getMsgdata(JSONObject data) {
+
+        JSONObject content = this.getContent(data);
+        String msgdata = "";
+        try {
+            msgdata = content.toString();
+        } catch (Exception ignored) {
+        }
+
+        return msgdata;
+    }
+
+
+    public String downMedia(String sdkField, String media_path) {
         String indexbuf = "";
         while (true) {
             long media_data = Finance.NewMediaData();
-            int ret = Finance.GetMediaData(this.sdk, indexbuf, sdkField, "", "", 60, media_data);
+            int ret = Finance.GetMediaData(this.sdk, indexbuf, sdkField, this.proxy, this.passwd, this.timeout, media_data);
             if (ret != 0) {
-                System.out.println("获取失败");
-                return;
+                return "";
             }
-            System.out.printf("getmediadata outindex len:%d, data_len:%d, is_finis:%d\n", Finance.GetIndexLen(media_data), Finance.GetDataLen(media_data), Finance.IsMediaDataFinish(media_data));
+
             try {
-                FileOutputStream outputStream = new FileOutputStream(new File("." + media_path), true);
+                FileOutputStream outputStream = new FileOutputStream(new File(media_path), true);
                 outputStream.write(Finance.GetData(media_data));
                 outputStream.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
             if (Finance.IsMediaDataFinish(media_data) == 1) {
                 Finance.FreeMediaData(media_data);
-                String sql = String.format("UPDATE %s SET media_code=1 WHERE sdkfield=?", this.tableName);
-                DB.getJdbcTemplate().update(sql, sdkField);
-                System.out.println("获取结束");
-
-                if (ext.equals("amr")) {
-                    try {
-                        Audio.toMp3("." + media_path, "." + media_path + ".mp3");
-                    } catch (Exception e) {
-
-                    }
-                }
-
                 break;
             } else {
                 indexbuf = Finance.GetOutIndexBuf(media_data);
                 Finance.FreeMediaData(media_data);
             }
         }
+        return media_path;
     }
 }

@@ -1,25 +1,26 @@
-
 /*layui优化*/
 table .layui-form-switch {
     margin-top: 0;
 }
-.layui-form-select{
+
+.layui-form-select {
     z-index: 1000;
 }
+
 .layui-form-item .layui-input-inline,
 .layui-input-block {
     width: 500px;
 }
+
 .layui-form-onswitch,
-.layui-form-checked[lay-skin="primary"] i{
+.layui-form-checked[lay-skin="primary"] i {
     border-color: #1aa094;
     background-color: #1aa094;
 }
 
 
-
 /*公共样式*/
-html,body,#app,.main,.right{
+html, body, #app, .main, .right {
     height: 100%;
 }
 
@@ -40,7 +41,6 @@ a:hover {
 }
 
 
-
 .cl:after {
     content: '\20';
     display: block;
@@ -57,7 +57,7 @@ a:hover {
     float: right
 }
 
-.p20{
+.p20 {
     padding: 20px;
     box-sizing: border-box;
 }
@@ -69,9 +69,10 @@ foo, .foo {
 
 /*滚动条*/
 
-::-webkit-scrollbar-corner{
+::-webkit-scrollbar-corner {
     background: #1aa094;
 }
+
 ::-webkit-scrollbar {
     width: 0px;
 }
@@ -79,7 +80,10 @@ foo, .foo {
 ::-webkit-scrollbar-thumb {
     background: #1aa094;
 }
-::-webkit-scrollbar-thumb:window-inactive { background: #1aa094}
+
+::-webkit-scrollbar-thumb:window-inactive {
+    background: #1aa094
+}
 
 
 /*顶栏*/
@@ -93,7 +97,8 @@ header {
     z-index: 1001;
     color: #333;
 }
-header h1{
+
+header h1 {
     height: 50px;
     line-height: 50px;
     width: 150px;
@@ -105,22 +110,23 @@ header h1{
     font-size: 30px;
 }
 
-header .breadcrumb{
+header .breadcrumb {
     margin-left: 150px;
     padding-left: 20px;
 }
-header .breadcrumb i{
+
+header .breadcrumb i {
     float: left;
 }
-header .breadcrumb ul{
+
+header .breadcrumb ul {
     float: left;
 }
-header .breadcrumb li{
+
+header .breadcrumb li {
     float: left;
     margin: 0 3px;
 }
-
-
 
 
 .main {
@@ -148,15 +154,17 @@ header .breadcrumb li{
     width: 100%;
     box-sizing: border-box;
 }
-.left ul li.hidden div{
+
+.left ul li.hidden div {
     display: none;
 }
-.left ul li.hidden i.arrow{
-    transform:rotate(180deg);
-    -ms-transform:rotate(180deg);
-    -moz-transform:rotate(180deg);
-    -webkit-transform:rotate(180deg);
-    -o-transform:rotate(180deg);
+
+.left ul li.hidden i.arrow {
+    transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
     padding-bottom: 4px;
 }
 
@@ -182,11 +190,13 @@ header .breadcrumb li{
     font-size: 12px;
     padding-top: 4px;
 }
-.left ul li>div{
+
+.left ul li > div {
     position: relative;
     background-color: #404852;
 }
-.left ul li>div a {
+
+.left ul li > div a {
     padding-left: 45px;
     color: #b2b2b2;
 }
@@ -212,7 +222,7 @@ header .breadcrumb li{
     height: 100%;
 }
 
-.right iframe{
+.right iframe {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -227,7 +237,7 @@ header .breadcrumb li{
     box-sizing: border-box;
 }
 
-.right>a>i {
+.right > a > i {
     margin-right: 5px;
 }
 
@@ -261,27 +271,27 @@ header .breadcrumb li{
 }
 
 
-
 /*分页*/
 
-.page{
+.page {
     margin-top: 10px;
     margin-bottom: 10px;
     overflow: hidden;
 }
 
-.page li{
+.page li {
     float: left;
 }
 
-.page li a, .page li span{
+.page li a, .page li span {
     padding: 5px 10px;
     background-color: #009688;
     color: #FFF;
     margin-right: 5px;
     display: block;
 }
-.page li a:hover, .page li span{
+
+.page li a:hover, .page li span {
     background-color: #999;
 }
 

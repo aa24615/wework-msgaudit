@@ -20,17 +20,45 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.8.1</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20201115</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.qcloud</groupId>
+            <artifactId>cos_api</artifactId>
+            <version>5.6.54</version>
+        </dependency>
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
+
+
 
         <dependency>
             <groupId>com.tencent.wework</groupId>
             <artifactId>wework-sdk</artifactId>
-            <version>1.0</version>
+            <version>3.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/wework-sdk/target/wework-sdk-1.0.jar</systemPath>
+            <systemPath>${project.basedir}/../wework-sdk/target/wework-sdk-3.0.jar</systemPath>
         </dependency>
+
+
+
+
     </dependencies>
 </project>

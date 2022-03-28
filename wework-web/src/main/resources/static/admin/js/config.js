@@ -3,7 +3,7 @@ const menu = [{
     "icon": "&#xe68e;",
     "url": "index.html",
     "hidden": false,
-    "active":false,
+    "active": false,
     "list": []
 }, {
     "name": "企业管理",
@@ -43,7 +43,7 @@ const menu = [{
             "url": "404.html"
         }]
     }
-    ];
+];
 
 const config = {
     name: "msgaudit",

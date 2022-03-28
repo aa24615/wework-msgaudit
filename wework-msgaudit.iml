@@ -36,6 +36,8 @@
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.32" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:2.6.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:2.6.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-logging:2.6.2" level="project" />
     <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:1.2.9" level="project" />
     <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:1.2.9" level="project" />
@@ -98,9 +100,6 @@
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-jdbc:2.6.2" level="project" />
     <orderEntry type="library" name="Maven: com.zaxxer:HikariCP:4.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:5.3.14" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-devtools:2.6.2" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.6.2" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:2.6.2" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20201115" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: mysql:mysql-connector-java:8.0.27" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.15" level="project" />
@@ -109,15 +108,6 @@
       <library name="Maven: it.sauronsoftware:jave:1.0.2">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/jave/jave-1.0.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: com.tencent.wework:wework-sdk:1.0">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/wework-sdk/target/wework-sdk-1.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

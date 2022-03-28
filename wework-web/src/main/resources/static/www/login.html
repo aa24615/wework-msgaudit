@@ -36,24 +36,25 @@
     </form>
 
     <script>
-        layui.use('form', function() {
+        layui.use('form', function () {
             const form = layui.form;
             const layer = layui.layer;
             const $ = layui.jquery;
 
-            form.on('submit(login)', function(data) {
+            form.on('submit(login)', function (data) {
                 layer.load({
                     shade: 0.5,
                     time: 0,
                 });
 
-                http.post('/login').then(res=>{
-                    if(res.code==1){
-                        setTimeout(function() {
+                http.post('/login').then(res => {
+                    if (res.code == 1) {
+                        setTimeout(function () {
                             window.location.href = 'index.html';
                         }, 1000);
-                    }else{
-                        layer.msg(res.msg,function (){});
+                    } else {
+                        layer.msg(res.msg, function () {
+                        });
                     }
                 })
 

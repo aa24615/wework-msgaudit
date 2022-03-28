@@ -25,22 +25,23 @@ body {
     margin-bottom: 50px
 }
 
-.login .back{
+.login .back {
     float: right;
     color: #666;
 }
 
 
-.layui-form-item{
+.layui-form-item {
     position: relative;
 }
 
-.layui-form-item .input-icon{
+.layui-form-item .input-icon {
     position: absolute;
     left: 5px;
     top: 10px;
     color: #999;
 }
-.layui-form-item .layui-input{
+
+.layui-form-item .layui-input {
     padding-left: 24px;
 }
