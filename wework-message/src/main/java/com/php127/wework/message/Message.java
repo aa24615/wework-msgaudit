@@ -242,7 +242,7 @@ public class Message {
 
             media_path = "./msgfile/" + this.corpid + "/" + seq + "." + ext;
 
-            this.downMedia(sdkfileid, media_path, );
+            this.downMedia(sdkfileid, media_path);
         }
 
         data.setMediaPath(media_path);
