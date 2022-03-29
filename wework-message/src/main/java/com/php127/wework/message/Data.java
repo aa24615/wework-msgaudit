@@ -4,18 +4,18 @@ import org.json.JSONObject;
 
 public class Data {
 
-    private String msgid = "";
-    private String msgfrom = "";
-    private String roomid = "";
-    private String msgtype = "";
-    private String msgdata = "";
-    private long msgtime = 0;
-    private long seq = 0;
-    private String tolist = "";
-    private String sdkfileid = "";
-    private String text = "";
-    private String action = "";
-    private String media_path = "";
+    protected String msgid = "";
+    protected String msgfrom = "";
+    protected String roomid = "";
+    protected String msgtype = "";
+    protected String msgdata = "";
+    protected long msgtime = 0;
+    protected long seq = 0;
+    protected String tolist = "";
+    protected String sdkfileid = "";
+    protected String text = "";
+    protected String action = "";
+    protected String media_path = "";
 
     public void setSeq(long seq) {
         this.seq = seq;
@@ -63,5 +63,10 @@ public class Data {
 
     public void setTolist(String tolist) {
         this.tolist = tolist;
+    }
+
+
+    public Object getData(){
+        return this;
     }
 }
