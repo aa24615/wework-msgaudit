@@ -27,6 +27,7 @@ public class Message {
     protected String corpid = null;
     protected String proxy = "";
     protected String passwd = "";
+    protected String savePath = "./msgfile/";
     protected long seq = 0;
     protected long timeout = 60;
     protected long sdk;
@@ -55,14 +56,14 @@ public class Message {
         this.timeout = timeout;
     }
 
+    public void setSavePath(String savePath) {
+        this.savePath = savePath;
+    }
 
-    public Message(String corpid, String secret, String prikey, String proxy, String passwd, long timeout) {
+    public Message(String corpid, String secret, String prikey) {
         this.sdk = Finance.NewSdk();
 
         this.setCorpid(corpid);
-        this.setPasswd(passwd);
-        this.setProxy(proxy);
-        this.setTimeout(timeout);
         this.setPrikey(prikey);
 
         int state = Finance.Init(this.sdk, corpid, secret);
@@ -125,12 +126,7 @@ public class Message {
 
         }
 
-
-        System.out.println("获取成功:" + errmsg);
         JSONArray chatdata = data.getJSONArray("chatdata");
-
-        System.out.println("消息数:" + chatdata.length());
-
 
         Object[] list = new Object[chatdata.length()];
 
