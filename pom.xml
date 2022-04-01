@@ -104,7 +104,15 @@
             <artifactId>jave</artifactId>
             <version>1.0.2</version>
             <scope>system</scope>
-            <systemPath>../../lib/jave/jave-1.0.2.jar</systemPath>
+            <systemPath>${project.basedir}/lib/jave/jave-1.0.2.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.php127.wework</groupId>
+            <artifactId>wework-message</artifactId>
+            <version>3.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/wework-message-3.0.jar</systemPath>
         </dependency>
 
 
