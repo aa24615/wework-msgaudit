@@ -4,7 +4,14 @@
 实时拉取企业微信聊天记录java版SDK    
 [官方文档](https://open.work.weixin.qq.com/api/doc/90000/90135/91774)
 
-### 功能
+
+
+### 包含以下包
+
+- [wework-sdk](https://github.com/aa24615/wework-sdk) 企业微信 会话内容存档 sdk调用接口
+- [wework-message](https://github.com/aa24615/wework-message) 获取聊天记录,解密,下载媒体文件
+
+### 已实现
 
 - [x] 多企业
 - [x] 音频转码
@@ -13,30 +20,27 @@
 ### 要求
 
 1. jdk >= 8.0
-2. mvn
+2. mvn >=3.0
 3. mysql >= 5.6
 
+### 把动态库拷贝到系统
 
-### 配置
-
-- mysql配置
-
-```shell
-src/main/java/com/php127/wework/DB.java
-```
-
-- 把动态库拷贝到系统
-
+linux系统
 ```shell
 cp ./lib/WeWorkFinanceSdk.so /usr/lib/WeWorkFinanceSdk.so
 ```
 
-- 依懒包
+win系统
 
-idea中将 `lib/jave/jave-1.0.2.jar` 目录设为库
+```shell
+//请把lib下四个文件拷贝到C盘 C:\Windows\System32\
 
+libcrypto-1_1-x64.dll
+libcurl-x64.dll
+libssl-1_1-x64.dll
+WeWorkFinanceSdk.dll
+```
 
-## 数据
 
 ### 数据表
 
@@ -52,11 +56,10 @@ idea中将 `lib/jave/jave-1.0.2.jar` 目录设为库
 |corpid|企业id|
 |secret|会话存档secret|
 |corpname|企业名称|
-|prikey|私钥 注意:去掉头尾|
 |limits|一页拉取条数|
 |timeout|拉取超时(秒)|
 |status|状态|
-|update|是否更新|
+|created_at|创建时间|
 
 > 注意: 私钥请去掉头尾,注意格空
 
@@ -84,7 +87,8 @@ idea中将 `lib/jave/jave-1.0.2.jar` 目录设为库
 
 #### 媒体文件
 
-聊天中产生的图片,语音,视频,doc文档等文件 默认下载到 `msgfile/coprid_name` 目录下   
+聊天中产生的图片,语音,视频,doc文档等文件 默认下载到 `msgfile/coprid_name` 目录下 
+当然,您也可以在web后台管理中指定目录
 您可以在nginx上添加一个静态站点指向 `msgfile` 目录 即可访问资源
 
 ### 安装
@@ -103,7 +107,7 @@ mvn package
 ### 运行
 
 ```shell script
-java -jar target/wework-msgaudit-2.0.jar
+java -jar target/wework-msgaudit-3.0.jar
 ```
 
 
@@ -129,8 +133,6 @@ docker-compose up -d
 前端页面 挂载 到 nginx 容器 `/www` 目录中 域名为 `wework.php127.com`
 后端服务 使用nginx 代理 域名为 `api.wework.php127.com`
 
-
-
 **docker清单**
 
 |镜像|版本|
@@ -139,9 +141,6 @@ docker-compose up -d
 |mysql|5.7|
 |redis|6.2.5|
 |nginx|1.14.0|
-
-
-
 
 
 ###  常见问题
@@ -156,7 +155,7 @@ docker-compose up -d
 
 - 无法运行?
 
-    请注意运行环境,必需在linux下,并且将 `libWeWorkFinanceSdk_Java.so` 拷贝到 `/usr/lib/` 下
+    请注意运行环境,如果在linux下,请将 `libWeWorkFinanceSdk_Java.so` 拷贝到 `/usr/lib/` 下
 
 - 可以运行无法拉取?
 
