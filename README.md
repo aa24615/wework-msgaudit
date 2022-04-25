@@ -3,7 +3,7 @@
 企业微信-会话内容存档       
 实时拉取企业微信聊天记录java版SDK    
 在使用前,请认真阅读官方文档  
-[https://open.work.weixin.qq.com/api/doc/90000/90135/91774](https://open.work.weixin.qq.com/api/doc/90000/90135/91774)
+[https://developer.work.weixin.qq.com/document/path/91774](https://developer.work.weixin.qq.com/document/path/91774)
 
 ### 功能
 
