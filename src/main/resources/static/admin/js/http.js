@@ -7,6 +7,7 @@ const http = axios.create({
 http.interceptors.request.use(
     function (config) {
         // 在发送请求之前做些什么
+        config.data = Qs.stringify(config.data)
         return config;
     },
     function (error) {
