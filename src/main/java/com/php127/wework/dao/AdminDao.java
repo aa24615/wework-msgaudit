@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface AdminDao extends CrudRepository<Admin, Integer> {
 
+    @Override
     List<Admin> findAll();
 
     Admin findByUsername(String username);
+
 
     Admin findFirstByUsername(String username);
 
