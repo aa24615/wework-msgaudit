@@ -7,7 +7,7 @@ import org.springframework.data.relational.core.mapping.Table;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "wework_admin")
+@Table("wework_admin")
 public class Admin {
 
     @Id
