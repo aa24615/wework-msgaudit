@@ -5,6 +5,12 @@
 在使用前,请认真阅读官方文档  
 [https://developer.work.weixin.qq.com/document/path/91774](https://developer.work.weixin.qq.com/document/path/91774)
 
+### 相关开源
+
+- [wework-msgaudit-php](https://github.com/aa24615/wework-msgaudit-php)	(php版 包含数据入库)
+- [wework-msgaudit-php](https://github.com/aa24615/wework-msgaudit-php-docker)	(php版docker镜像 仅sdk调用接口)
+
+
 ### 功能
 
 - [x] 多企业
