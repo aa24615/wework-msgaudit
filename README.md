@@ -8,7 +8,7 @@
 ### 相关开源
 
 - [wework-msgaudit-php](https://github.com/aa24615/wework-msgaudit-php)	(php版 包含数据入库)
-- [wework-msgaudit-php](https://github.com/aa24615/wework-msgaudit-php-docker)	(php版docker镜像 仅sdk调用接口)
+- [wework-msgaudit-php-docker](https://github.com/aa24615/wework-msgaudit-php-docker)	(php版docker镜像 仅sdk调用接口)
 
 
 ### 功能
