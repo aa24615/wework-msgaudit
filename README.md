@@ -8,8 +8,14 @@
 
 ### 包含以下包
 
-- [wework-sdk](https://github.com/aa24615/wework-sdk) 企业微信 会话内容存档 sdk调用接口
+- [wework-sdk](https://github.com/aa24615/wework-sdk) 企业微信 会话内容存档 仅sdk调用接口
 - [wework-message](https://github.com/aa24615/wework-message) 获取聊天记录,解密,下载媒体文件
+
+### 相关开源
+
+- [wework-msgaudit-php](https://github.com/aa24615/wework-msgaudit-php)	(php版 包含数据入库)
+- [wework-msgaudit-php](https://github.com/aa24615/wework-msgaudit-php-docker)	(php版docker镜像 仅sdk调用接口)
+
 
 ### 已实现
 
