@@ -5,6 +5,11 @@
 在使用前,请认真阅读官方文档  
 [https://developer.work.weixin.qq.com/document/path/91774](https://developer.work.weixin.qq.com/document/path/91774)
 
+### 关于停更问题
+
+由于本人公司注销,无法申请测试账号,近几年都完成v3版本的开发   
+希望有相关资质的朋友们提供测试账号让开源项目继续迭代
+
 ### 相关开源
 
 - [wework-msgaudit-php](https://github.com/aa24615/wework-msgaudit-php)	(php版 包含数据入库)
