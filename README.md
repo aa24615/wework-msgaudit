@@ -1,9 +1,13 @@
 # wework-msgaudit
 
+
+
 企业微信-会话内容存档       
 实时拉取企业微信聊天记录java版SDK    
 在使用前,请认真阅读官方文档  
 [https://developer.work.weixin.qq.com/document/path/91774](https://developer.work.weixin.qq.com/document/path/91774)
+
+![img](./docs/i.jpg)
 
 ### 关于停更问题
 
